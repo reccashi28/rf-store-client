@@ -11,7 +11,9 @@ const initState: AppState = {
         displayProduct: [],
     },
     user: {
-        isSignedIn: false
+        isSignedIn: false,
+        role: "",
+        name: "",
     }
 }
 

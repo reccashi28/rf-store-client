@@ -8,9 +8,10 @@ import axios from 'axios'
 
 import { createProduct, editProduct } from '../../redux/actions';
 import { AppState, Product } from '../../types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import Notification from '../Notification/Notification'
+axios.defaults.withCredentials = true;
 
 const preset_key = process.env.REACT_APP_CLOUDINARY_PRESET;
 const cloudinary_name = process.env.REACT_APP_CLOUDINARY_NAME;
@@ -51,7 +52,7 @@ function AddNewProduct() {
     const dispatch = useDispatch();
     const { displayProduct } = useSelector( (state: AppState) => state.product)
     const { _id } = useParams<{ _id: string }>()
-    
+    const history = useHistory()
     const filteredData = displayProduct.filter ( p => p._id === _id);
     const [notify, setNotify] = useState({isOpen: false, message: '', type: ''})
     const classes = useStyles();
@@ -59,7 +60,7 @@ function AddNewProduct() {
     const [previewSource, setPreviewSopurce] = useState("")
     const [imageUrl, setImageUrl] = useState("")
     const baseUrl = `https://api.cloudinary.com/v1_1/${cloudinary_name}/image/upload`
-    // let productImage = useRef<string | null>()
+    let productImage = useRef<string | null>()
 
     const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0]
@@ -86,7 +87,8 @@ function AddNewProduct() {
             isOpen: true,
             message: 'Saved Successfully',
             type: 'success'
-            })
+        })
+        history.push('/product');
     }
 
     return (
@@ -101,8 +103,8 @@ function AddNewProduct() {
             const response = await axios.post(baseUrl, formData)
             const data = await response.data;
             console.log(data, 'post to cloudinary')
-            const productImage = await data.secure_url;
-            setImageUrl(productImage)
+            const productImageUrl = await data.secure_url;
+            productImage.current = productImageUrl;
             dispatch(createProduct(values))
             setNotify({
              isOpen: true,

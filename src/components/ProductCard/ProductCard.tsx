@@ -7,11 +7,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { Product } from '../../types';
+import { AppState, Product } from '../../types';
 import { Link } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import { deleteProduct, fetchProduct } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 type ProductCardProps = {
@@ -20,7 +20,7 @@ type ProductCardProps = {
 
 function ProductCard( {prod}: ProductCardProps) {
   const dispatch = useDispatch()
-
+  const { role } = useSelector( (state: AppState) => state.user)
   const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -62,24 +62,30 @@ function ProductCard( {prod}: ProductCardProps) {
       </CardContent>
     </CardActionArea>
     <CardActions>
-      <Button size="small" color="primary" >
-        Add to Cart
-      </Button>
-      <Link to={`/editProduct/${prod._id}`}>
+      { role === "user" ? 
+       (<Button size="small" color="primary" > Add to Cart </Button> ) : 
+        ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
         <Button size="small" color="primary"> 
           Edit
         </Button>
-      </Link>
+        </Link>
         <Button size="small" color="primary" onClick={ ()=> {
           // setConfirmDialog({
           //   isOpen: true,
           //   title: 'Are you sure to delete this item?',
           //   subTitle: 'You can\'t undo this operation'
           // })
-          prod._id && (handelDelete(prod._id))}
+          prod._id && (handelDelete(prod._id)
+          
+          )}
         }>
           Delete
         </Button>
+        </Grid>
+        )
+        }
+      
+     
     </CardActions>
   </Card>
   {/* <ConfirmDialog confirmDialog={confirmDialog} /> */}

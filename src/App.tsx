@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import { Grid, makeStyles } from '@material-ui/core';
+import axios from 'axios'
 
 import Home from './pages/Home/Home';
 import ProductCatalog from './pages/ProductCatalog/ProductCatalog';
@@ -10,6 +11,9 @@ import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 
 import './App.css';
+import Dashboard from './pages/Dashboard/Dashboard'
+
+axios.defaults.withCredentials = true;
 
 function App() {
   const useStyles = makeStyles({
@@ -20,15 +24,19 @@ function App() {
   
     const classes = useStyles();
   return (
-    <>
+    <div>
     <Grid container className={classes.root}>
       <Grid item xs={1} sm={2}/>
       <Grid item xs={10} sm={8}>
         <Router>
           <Header />
           <Switch>
+            
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
             </Route>
             <Route  path="/product">
               <ProductCatalog />
@@ -42,7 +50,7 @@ function App() {
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/login">
+            <Route path="/signin">
               <Login />
             </Route>
           </Switch>
@@ -50,7 +58,7 @@ function App() {
       </Grid>
       <Grid item xs={1} sm={2}/>
     </Grid> 
-    </>
+    </div>
   );
 }
 

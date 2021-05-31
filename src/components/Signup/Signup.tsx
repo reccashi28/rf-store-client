@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createNewUser } from '../../redux/actions/user';
 import Notification from '../Notification/Notification'
+import { useHistory } from 'react-router';
+import { AppState } from '../../types';
 
 
 function Copyright() {
@@ -69,17 +71,20 @@ export default function SignUp() {
   const dispatch = useDispatch()
   const [notify, setNotify] = useState({isOpen: false, message: '', type: ''})
   const classes = useStyles();
-
+  const history = useHistory()
+  const { role } = useSelector( (state: AppState) => state.user )
+  
   const formik = useFormik( {
     initialValues: initialState,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-        dispatch(createNewUser(values))
-        setNotify({
-          isOpen: true,
-          message: 'User Created Successfully',
-          type: 'success'
-          })
+      dispatch(createNewUser(values))
+      setNotify({
+        isOpen: true,
+        message: 'User Created Successfully',
+        type: 'success'
+        })
+      history.push('/signin')
     }
 })
 
@@ -87,9 +92,18 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        {role === "user" ? (
+          <Typography component="h1" variant="h5">
+          <Typography>Hello</Typography>
           Sign up
         </Typography>
+        ) :
+         (
+          <Typography component="h1" variant="h5">
+          Create User
+        </Typography>
+        )}
+        
         <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
