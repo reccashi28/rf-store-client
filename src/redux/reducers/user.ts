@@ -1,24 +1,37 @@
-import { GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
+import { DELETE_USER, GET_USERS, GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
 
-const initialState = {
+const initialState: UserState = {
     isSignedIn: false,
     role: "",
-    name: ""
+    name: "",
+    users: [],
 }
 
 const user = ( state = initialState, action: UserActions): UserState => {
     switch(action.type) {
         case SIGN_IN_SUCCESS: {
-            console.log(action.payload.isUserSignedIn, "in reducer")
             return {...state, isSignedIn: action.payload.isUserSignedIn}
         }
         case GET_USER_ROLE: {
-            console.log(action.payload.data, "in reducer")
             return {...state, role: action.payload.data}
         }
         case GET_USER_NAME: {
-            console.log(action.payload.data, "in reducer")
             return {...state, name: action.payload.data}
+        }
+        case GET_USERS: {
+            return{...state, users: action.payload.data}
+        }
+        case DELETE_USER: {
+            const { data } = action.payload
+            console.log(data, "userid")
+            const index = state.users.findIndex( user => user._id === data )
+            console.log(index, "found")
+            if (index >= 0) {
+                state.users.splice(index, 1)
+                return { ...state, users: [...state.users] }
+            }
+            console.log('deleted successfully')
+            return state
         }
         default: {
             return state

@@ -5,6 +5,10 @@ export const CREATE_NEW_USER = 'CREATE_NEW_USER'
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const GET_USER_ROLE = 'GET_USER_ROLE'
 export const GET_USER_NAME = 'GET_USER_NAME'
+export const GET_USERS = 'GET_USERS'
+export const EDIT_USER = 'EDIT_USER'
+export const DELETE_USER = 'DELETE_USER'
+
 export type Product = {
     _id?: string
     name: string;
@@ -33,11 +37,12 @@ export type CreateProduct = {
 }
 
 export type User = {
+    _id?: string
     firstName: string
-  lastName: string
-  email: string
-  password: string
-  isAdmin?: boolean
+    lastName: string
+    email: string
+    password: string
+    role?: string
 }
 
 export type UserLogIn = {
@@ -72,9 +77,30 @@ export type GetUserName = {
     }
 }
 
+export type GetUsers = {
+    type: typeof GET_USERS, 
+    payload: {
+        data: User[],
+    }
+}
+
+export type EditUser = {
+    type: typeof EDIT_USER, 
+    payload: {
+        data: User,
+    }
+}
+
+export type DeleteUser = {
+    type: typeof DELETE_USER, 
+    payload: {
+        data: string,
+    }
+}
+
 export type ProductActions = GetProductSuccess | CreateProduct
 
-export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName
+export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | DeleteUser
 
 export type ProductState = {
     displayProduct: Product[]
@@ -84,8 +110,10 @@ export type UserState = {
     isSignedIn: boolean,
     role: string,
     name: string,
+    users: User[]
 }
+
 export type AppState = {
     product: ProductState,
-    user: UserState
+    user: UserState,
 }

@@ -12,6 +12,7 @@ import Login from './components/Login/Login';
 
 import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard'
+import DashBoardUserForm from './components/DashBoardUserForm/DashBoardUserForm';
 
 axios.defaults.withCredentials = true;
 
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route path="/signin">
               <Login />
+            </Route>
+            <Route path="/dashboard/edit/:_id">
+              <DashBoardUserForm />
             </Route>
           </Switch>
         </Router>   

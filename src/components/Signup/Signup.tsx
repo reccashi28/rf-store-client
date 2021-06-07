@@ -23,8 +23,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="https://rf-meyer.com/">
+        R.F. Meyer
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -78,13 +78,12 @@ export default function SignUp() {
     initialValues: initialState,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(createNewUser(values))
+      dispatch(createNewUser(values, history, "signup"))
       setNotify({
         isOpen: true,
         message: 'User Created Successfully',
         type: 'success'
         })
-      history.push('/signin')
     }
 })
 

@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { AppState, Product } from '../../types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
 import { deleteProduct, fetchProduct } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ type ProductCardProps = {
 
 function ProductCard( {prod}: ProductCardProps) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { role } = useSelector( (state: AppState) => state.user)
   const useStyles = makeStyles({
   root: {
@@ -38,7 +39,7 @@ function ProductCard( {prod}: ProductCardProps) {
   
   const handelDelete = (id: string) => {
     if(window.confirm('Are you sure you want to delete this product?')){
-      dispatch(deleteProduct(id))
+      dispatch(deleteProduct(id, history))
     }
   }
   return (

@@ -66,8 +66,8 @@ export default function SignIn() {
   const formik = useFormik( {
         initialValues: initialState,
         onSubmit: (values) => {
-          dispatch(userLogin(values))
-          role && role === "admin" ? history.push('/dashboard') : history.push('/home')
+          dispatch(userLogin(values, history))
+          // role && role === "admin" ? history.push('/dashboard') : history.push('/home')
         }
   })
   return (

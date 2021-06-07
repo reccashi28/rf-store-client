@@ -44,6 +44,7 @@ function Navbar() {
                 <Grid item>
                     <ul className={classes.nav}>
                         <li className={classes.nav_item}><Link className={classes.nav_link} to="/dashboard">Dashboard</Link></li>
+                        <li className={classes.nav_item}> <Link className={classes.nav_link} to='/product'>Product</Link></li>
                         <li className={classes.nav_item}> <Link className={classes.nav_link} to='/addProduct'>Add New Product</Link></li>
                     </ul>
                 </Grid>

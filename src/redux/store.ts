@@ -14,6 +14,7 @@ const initState: AppState = {
         isSignedIn: false,
         role: "",
         name: "",
+        users: []
     }
 }
 

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,6 +9,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, fetchUser } from '../../redux/actions';
+import { AppState } from '../../types';
+import DashBoardUserForm from '../../components/DashBoardUserForm/DashBoardUserForm';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   table: {
@@ -17,48 +25,72 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 function Dashboard() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { users } = useSelector((state: AppState) => state.user)
+  const [userDialogForm, setUserDialogForm] = useState({isOpen: false, title: '', type: ''})
+  useEffect( () => {
+    dispatch(fetchUser())
+  }, [dispatch])
+
+  const tableHeaders = ["First Name", "Last Name", "Email", "Role", "Actions"]
+
+  // type openDialogProps = {
+  //   openDialog: boolean
+  //   setOpenDialog: any
+  // }
+  
+function handleEditUser(){
+  setUserDialogForm({isOpen: true, title: "Update User", type: "edit"})
+  }
+
+function handleDelete(userId: string) {
+  dispatch(deleteUser(userId))
+}
+
+function handleAddUser() {
+  setUserDialogForm({isOpen: true, title: "Add New User", type: "add"})
+}
 
   return (
+    <>
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="right" colSpan={tableHeaders.length}>
+            <Button variant="contained" color="primary" onClick={handleAddUser}>Add User</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {tableHeaders.map( theader => <TableCell>{theader}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
+          {users.map( user => {
+           return <TableRow key={user._id}>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>
+              <Link to={`/dashboard/edit/${user._id}`}>
+                  <Button onClick={handleEditUser}>
+                    <EditIcon />
+                  </Button>
+                </Link>
+                <Button onClick={ () => user._id ? handleDelete(user._id) : "Loading"}>
+                    <DeleteIcon />
+                </Button>
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
             </TableRow>
-          ))}
+          })}
         </TableBody>
       </Table>
     </TableContainer>
+    {/* <DashBoardUserForm userDialogForm={userDialogForm} setUserDialogForm={setUserDialogForm} /> */}
+    </>
   );
 }
 

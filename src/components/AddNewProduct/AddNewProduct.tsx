@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ import { AppState, Product } from '../../types';
 import { useHistory, useParams } from 'react-router-dom';
 
 import Notification from '../Notification/Notification'
-axios.defaults.withCredentials = true;
 
 const preset_key = process.env.REACT_APP_CLOUDINARY_PRESET;
 const cloudinary_name = process.env.REACT_APP_CLOUDINARY_NAME;
@@ -58,9 +57,7 @@ function AddNewProduct() {
     const classes = useStyles();
     const [selectedImage, setselectedImage] = useState<any | string>()
     const [previewSource, setPreviewSopurce] = useState("")
-    const [imageUrl, setImageUrl] = useState("")
     const baseUrl = `https://api.cloudinary.com/v1_1/${cloudinary_name}/image/upload`
-    let productImage = useRef<string | null>()
 
     const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0]
@@ -77,18 +74,13 @@ function AddNewProduct() {
         }
     }
 
-    // useEffect( () => {
-    //     productImage.current = imageUrl
-    // })
-
     const handelSave = (values: Product) => {
-        dispatch(editProduct(values))
+        dispatch(editProduct(values, history))
         setNotify({
             isOpen: true,
             message: 'Saved Successfully',
             type: 'success'
         })
-        history.push('/product');
     }
 
     return (
@@ -100,12 +92,12 @@ function AddNewProduct() {
             formData.append('file', selectedImage)
             formData.append('upload_preset', `${preset_key}`)
 
-            const response = await axios.post(baseUrl, formData)
+            const response = await axios.post(baseUrl,  formData, {withCredentials: false})
             const data = await response.data;
             console.log(data, 'post to cloudinary')
             const productImageUrl = await data.secure_url;
-            productImage.current = productImageUrl;
-            dispatch(createProduct(values))
+            values.productImage = productImageUrl;
+            dispatch(createProduct(values, history))
             setNotify({
              isOpen: true,
              message: 'Created Successfully',
@@ -136,7 +128,7 @@ function AddNewProduct() {
                         </Grid>
                         <Grid item>
                             <Box id="checkbox-group-variants">Variants</Box>
-                            <Box role="group" aria-labelledby="checkbox-group-variants">
+                            <Box role="group" aria-labelledby="checkbox-group-variants" >
                                 <label>
                                 <Field type="checkbox" name="variants" value="Red" />
                                 Red
@@ -194,7 +186,7 @@ function AddNewProduct() {
                             <Button variant="contained" color="primary" onClick={ () => handelSave(values)} >Cancel</Button>
                         </Grid>
                    </Grid>
-                        <pre>{JSON.stringify(values, null, 8)}</pre>
+          <pre>{JSON.stringify(values, null, 3)}</pre>
 
                </Form>
             ) }

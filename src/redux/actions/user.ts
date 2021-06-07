@@ -1,23 +1,27 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME } from "../../types"
+import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DELETE_USER } from "../../types"
 
-export const createNewUser = (data: User) => {
+export const createNewUser = (data: User, history: any, from : string) => {
     return async (dispatch: Dispatch) => {
       axios.post('/users', data)
-        .then( res => console.log(res.data))
+        .then( res => {
+          if(res.data) {
+            fetchUser()
+            from === "signup" ? history.push('/signin') : history.push('/dashboard')
+          }
+        })
         .catch( err => console.log(err))
     }
   }
 
-export const userLogin = (loginData: UserLogIn) => {
+export const userLogin = (loginData: UserLogIn, history: any) => {
   return async (dispatch: Dispatch) => {
     axios.post('/users/login', loginData)
       .then( res => {
-        console.log(res.data, "login success from user action")
         dispatch(getSignedInStatus(true))
         dispatch(getUserRole(res.data.role))
-        
+        res.data.role === "admin" ? history.push('/dashboard') : history.push('/')
       })
       .catch( err => console.log(err))
   }
@@ -27,7 +31,6 @@ export const userLogout = () => {
   return async (dispatch: Dispatch) => {
     axios.get('/users/logout')
       .then( res => {
-        console.log(res.data, "logout success")
         dispatch(getSignedInStatus(false))
         dispatch(getUserRole("user"))
       })
@@ -36,7 +39,6 @@ export const userLogout = () => {
 }
 
 export const getSignedInStatus = ( isUserSignedIn: boolean): UserActions => {
-  console.log("is signedin in action ", isUserSignedIn)
   return {
     type: SIGN_IN_SUCCESS,
     payload: {
@@ -46,7 +48,6 @@ export const getSignedInStatus = ( isUserSignedIn: boolean): UserActions => {
 }
 
 export const getUserRole = ( data: string): UserActions => {
-  console.log("in action ", data)
   return {
     type: GET_USER_ROLE,
     payload: {
@@ -56,11 +57,37 @@ export const getUserRole = ( data: string): UserActions => {
 }
 
 export const getUserName = ( data: string): UserActions => {
-  console.log("in action ", data)
   return {
     type: GET_USER_NAME,
     payload: {
       data,
     }
+  }
+}
+
+export const fetchUser = () => {
+  return async (dispatch: Dispatch) => {
+    axios.get('/users')
+      .then( res => dispatch(getUsers(res.data)))
+      .catch( err => console.log(err))
+  }
+}
+
+export const getUsers = ( data: User[]): UserActions => {
+  return {
+    type: GET_USERS,
+    payload: {
+      data,
+    }
+  }
+}
+
+export const deleteUser = ( data: string) => {
+  return async (dispatch: Dispatch) => {
+    axios.delete(`/users/${data}`)
+      .then( res => {
+        console.log("deleted successfully")
+      })
+      .catch( err => console.log(err))
   }
 }
