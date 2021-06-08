@@ -117,10 +117,21 @@ type itemsInCart = {
     quantity: number;
 }
 
+type addItemsToCart = {
+    productId: string;
+    quantity: number;
+}
+
 export type Cart = {
     purchasedBy: string;
     items: itemsInCart[];
     totalAmount: number;
+}
+
+
+export type ItemToCart = {
+    purchasedBy: string;
+    items: addItemsToCart[]
 }
 
 export type AddToCart = {

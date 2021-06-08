@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { Cart, CartActions, ITEMS_IN_CART } from "../../types"
+import { Cart, CartActions, ITEMS_IN_CART, ItemToCart } from "../../types"
 
 export const fetchCart = (userId: string) => {
     console.log(userId, "user id in action")
@@ -21,5 +21,18 @@ export const getItemsInCart = (items: Cart): CartActions => {
         payload: {
             items,
         }
+    }
+}
+
+export const addItemToCart = (data: ItemToCart) => {
+    console.log(data, "attempt to adding to cart from action")
+    return async (dispatch: Dispatch) => {
+        axios.post('/cart', data)
+            .then( res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }

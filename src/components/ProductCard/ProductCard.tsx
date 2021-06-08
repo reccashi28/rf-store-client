@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { AppState, Product } from '../../types';
 import { Link, useHistory } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
-import { deleteProduct, fetchProduct } from '../../redux/actions';
+import { addItemToCart, deleteProduct, fetchProduct } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
@@ -37,19 +37,40 @@ function ProductCard( {prod}: ProductCardProps) {
   const classes = useStyles();
   const dispatch = useDispatch()
   const history = useHistory()
-  const { role } = useSelector( (state: AppState) => state.user)
+  const { role, userId } = useSelector( (state: AppState) => state.user)
   const [addToCartBtn, setAddToCartBtn] = useState(false)
-
+  const [addToCartData, setAddToCartData] = useState({
+    purchasedBy: "",
+    items: [{
+      productId: "",
+      quantity: 0,
+    }]
+  })
   if(prod.quantity <= 0){
     setAddToCartBtn(true)
   }
 
   // const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: '', subTitle: ''})
-  
+  console.log(userId,"is user loggedin?")
   const handelDelete = (id: string) => {
     if(window.confirm('Are you sure you want to delete this product?')){
       dispatch(deleteProduct(id, history))
     }
+  }
+
+  const handleAddToCart = (prodId: string) => {
+    setAddToCartData({
+      purchasedBy: userId,
+      items: [{
+        productId: prodId,
+        quantity: 1,
+      }]
+    })
+
+    setTimeout(() => {
+    dispatch(addItemToCart(addToCartData))
+    }, 1000);
+    console.log(addToCartData, "see if it is setting the data")
   }
   return (
 <>
@@ -80,7 +101,11 @@ function ProductCard( {prod}: ProductCardProps) {
     </CardActionArea>
     <CardActions>
       { role === "user" ? 
-       (<Button size="small" color="primary" disabled={addToCartBtn} > Add to Cart </Button> ) : 
+       (<Button size="small" color="primary" disabled={addToCartBtn} onClick={() => {
+         if(prod._id){
+          handleAddToCart(prod._id)
+         }
+       }} > Add to Cart </Button> ) : 
         ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
         <Button size="small" color="primary"> 
           Edit
