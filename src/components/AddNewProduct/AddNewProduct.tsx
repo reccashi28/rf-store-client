@@ -83,6 +83,10 @@ function AddNewProduct() {
         })
     }
 
+    const handelCancel = () => {
+        history.push('/dashboard')
+    }
+
     return (
       <>  
        <Formik initialValues={_id ? filteredData[0] : initState} validationSchema={validationSchema} onSubmit={async (values) => {
@@ -183,7 +187,7 @@ function AddNewProduct() {
                         </Grid>
                         <Grid item lg={10} md={10} sm={10} xs ={10}>         
                             { _id ? <Button className={classes.margin} variant="contained" color="primary" onClick={ () => handelSave(values)}>Save</Button> : <Button type="submit" className={classes.margin} variant="contained" color="primary">Submit</Button>}
-                            <Button variant="contained" color="primary" onClick={ () => handelSave(values)} >Cancel</Button>
+                            <Button variant="contained" color="primary" onClick={ () => handelCancel()} >Cancel</Button>
                         </Grid>
                    </Grid>
           <pre>{JSON.stringify(values, null, 3)}</pre>

@@ -32,7 +32,7 @@ function ProductCatalog() {
 
             <Grid item sm={12}>
                 <Grid item container spacing={2} justify="center" alignContent="center">
-                    {displayProduct ? displayProduct.map( prod => <Grid item xs={10} sm={4}><ProductCard prod={prod} key={prod._id}/> </Grid>): <CircularProgress />
+                    {displayProduct ? displayProduct.map( prod => <Grid item sm={10} md={10} lg={4}><ProductCard prod={prod} key={prod._id}/> </Grid>): <CircularProgress />
                 }
                 </Grid>
             </Grid>

@@ -32,11 +32,10 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/dashboard">
+            <Route exact path="/dashboard">
               <Dashboard />
             </Route>
             <Route  path="/product">
@@ -54,7 +53,10 @@ function App() {
             <Route path="/signin">
               <Login />
             </Route>
-            <Route path="/dashboard/edit/:_id">
+            <Route exact path="/dashboard/edit/:_id">
+              <DashBoardUserForm />
+            </Route>
+            <Route exact path="/dashboard/adduser">
               <DashBoardUserForm />
             </Route>
           </Switch>

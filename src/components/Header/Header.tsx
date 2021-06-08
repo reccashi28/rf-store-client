@@ -16,6 +16,7 @@ import liIcon from '../../assets/images/linkedin-icon.png'
 import logo from '../../assets/images/logo.png'
 import Cart from '../Cart/Cart';
 import Searchbar from '../Searchbar/Searchbar';
+import { fetchCart } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
     images: {
@@ -36,17 +37,23 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
     const dispatch = useDispatch()
-    const { role, name } = useSelector( (state: AppState) => state.user )
+    const { role, name, userId } = useSelector( (state: AppState) => state.user )
+    const { inCart } = useSelector( (state: AppState) => state.cart )
+
     const classes = useStyles();
     const history = useHistory();
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
 
-    console.log(isSignedIn, "from login component")
-    // const [signedIn, setsignedIn] = useState()
-    // const [role, setRole] = useState("")
-    // const [name, setName] = useState("")
-    
+    console.log(inCart)
+   const totalQuantity = inCart.items.reduce( (sum, i) => { 
+        return sum + i.quantity
+   }, 0)
+
+    // useEffect( () => {
+    //     dispatch(fetchCart(userId))
+    // },[dispatch])
+
     return (
 //         <AppBar position="static">
 //   <Toolbar>
@@ -118,11 +125,11 @@ function Header() {
                         >
                         <Cart />
                         </Drawer>
-                        <button onClick={() => setCartOpen(true)}>
-                        <Badge badgeContent={0} color="error">
-                            <AddShoppingCartIcon />
-                        </Badge>
-                        </button>
+                        <Button onClick={() => setCartOpen(true)}>
+                            <Badge badgeContent={totalQuantity} color="error">
+                                <AddShoppingCartIcon />
+                            </Badge>
+                        </Button>
                         </Box>
                     </Grid>
                     ) : ""}

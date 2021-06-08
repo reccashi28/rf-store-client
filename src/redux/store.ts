@@ -14,7 +14,20 @@ const initState: AppState = {
         isSignedIn: false,
         role: "",
         name: "",
-        users: []
+        userId: "",
+        users: [],
+        dialog: {
+            isOpen: false,
+            title: "",
+            type: ""
+        },
+    },
+    cart: {
+        inCart: {
+            purchasedBy: "",
+            items: [],
+            totalAmount: 0
+        }
     }
 }
 

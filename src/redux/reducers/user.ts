@@ -1,10 +1,16 @@
-import { DELETE_USER, GET_USERS, GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
+import { DIALOG_DATA, GET_USERS, GET_USER_ID, GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
 
 const initialState: UserState = {
     isSignedIn: false,
     role: "",
     name: "",
+    userId: "",
     users: [],
+    dialog: {
+        isOpen: false,
+        title: "",
+        type: ""
+    },
 }
 
 const user = ( state = initialState, action: UserActions): UserState => {
@@ -21,17 +27,11 @@ const user = ( state = initialState, action: UserActions): UserState => {
         case GET_USERS: {
             return{...state, users: action.payload.data}
         }
-        case DELETE_USER: {
-            const { data } = action.payload
-            console.log(data, "userid")
-            const index = state.users.findIndex( user => user._id === data )
-            console.log(index, "found")
-            if (index >= 0) {
-                state.users.splice(index, 1)
-                return { ...state, users: [...state.users] }
-            }
-            console.log('deleted successfully')
-            return state
+        case DIALOG_DATA: {
+            return{...state, dialog: action.payload.dialog}
+        }
+        case GET_USER_ID: {
+            return{...state, userId: action.payload.data}
         }
         default: {
             return state

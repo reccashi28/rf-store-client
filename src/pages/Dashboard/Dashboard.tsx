@@ -10,10 +10,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, fetchUser } from '../../redux/actions';
+import { deleteUser, fetchUser, getDialogData } from '../../redux/actions';
 import { AppState } from '../../types';
 import DashBoardUserForm from '../../components/DashBoardUserForm/DashBoardUserForm';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -28,8 +28,10 @@ const useStyles = makeStyles({
 function Dashboard() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { users } = useSelector((state: AppState) => state.user)
   const [userDialogForm, setUserDialogForm] = useState({isOpen: false, title: '', type: ''})
+
   useEffect( () => {
     dispatch(fetchUser())
   }, [dispatch])
@@ -42,15 +44,17 @@ function Dashboard() {
   // }
   
 function handleEditUser(){
-  setUserDialogForm({isOpen: true, title: "Update User", type: "edit"})
+  dispatch(getDialogData({isOpen: true, title: "Update User", type: "edit"}))
+  // setUserDialogForm({isOpen: true, title: "Update User", type: "edit"})
   }
 
 function handleDelete(userId: string) {
-  dispatch(deleteUser(userId))
+  dispatch(deleteUser(userId, history))
 }
 
 function handleAddUser() {
-  setUserDialogForm({isOpen: true, title: "Add New User", type: "add"})
+  dispatch(getDialogData({isOpen: true, title: "Add New User", type: "add"}))
+  // setUserDialogForm({isOpen: true, title: "Add New User", type: "add"})
 }
 
   return (
@@ -60,7 +64,7 @@ function handleAddUser() {
         <TableHead>
           <TableRow>
             <TableCell align="right" colSpan={tableHeaders.length}>
-            <Button variant="contained" color="primary" onClick={handleAddUser}>Add User</Button>
+            <Link to="/dashboard/adduser"><Button variant="contained" color="primary" onClick={() => handleAddUser()}>Add User</Button></Link>
             </TableCell>
           </TableRow>
           <TableRow>

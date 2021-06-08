@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DELETE_USER } from "../../types"
+import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID } from "../../types"
 
 export const createNewUser = (data: User, history: any, from : string) => {
     return async (dispatch: Dispatch) => {
@@ -21,6 +21,7 @@ export const userLogin = (loginData: UserLogIn, history: any) => {
       .then( res => {
         dispatch(getSignedInStatus(true))
         dispatch(getUserRole(res.data.role))
+        dispatch(getUserId(res.data.userid))
         res.data.role === "admin" ? history.push('/dashboard') : history.push('/')
       })
       .catch( err => console.log(err))
@@ -82,11 +83,46 @@ export const getUsers = ( data: User[]): UserActions => {
   }
 }
 
-export const deleteUser = ( data: string) => {
+export const getUserId = ( data: string): UserActions => {
+  return {
+    type: GET_USER_ID,
+    payload: {
+      data,
+    }
+  }
+}
+
+export const deleteUser = ( data: string, history: any) => {
   return async (dispatch: Dispatch) => {
     axios.delete(`/users/${data}`)
       .then( res => {
-        console.log("deleted successfully")
+        if(res.data) {
+          fetchUser()
+          history.push('/dashboard')
+        }
+      })
+      .catch( err => console.log(err))
+  }
+}
+
+
+export const getDialogData = ( dialog: DialogState ): UserActions => {
+  return {
+    type: DIALOG_DATA,
+    payload: {
+      dialog,
+    }
+  }
+}
+
+export const updateUser = (data: User, history: any) => {
+  return async (dispatch: Dispatch) => {
+    axios.put(`/users/${data._id}`, data)
+      .then( res => {
+        if(res.data) {
+          fetchUser()
+          history.push('/dashboard')
+        }
       })
       .catch( err => console.log(err))
   }

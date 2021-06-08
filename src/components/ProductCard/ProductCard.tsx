@@ -18,11 +18,7 @@ type ProductCardProps = {
     prod: Product
 }
 
-function ProductCard( {prod}: ProductCardProps) {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const { role } = useSelector( (state: AppState) => state.user)
-  const useStyles = makeStyles({
+const useStyles = makeStyles({
   root: {
     maxWidth: 345,
     height: 400,
@@ -31,10 +27,23 @@ function ProductCard( {prod}: ProductCardProps) {
   },
   padding: {
       padding: 30,
-  }
+  },
+  stock: {
+    color: "#00E041"
+  },
 });
 
+function ProductCard( {prod}: ProductCardProps) {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const { role } = useSelector( (state: AppState) => state.user)
+  const [addToCartBtn, setAddToCartBtn] = useState(false)
+
+  if(prod.quantity <= 0){
+    setAddToCartBtn(true)
+  }
+
   // const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: '', subTitle: ''})
   
   const handelDelete = (id: string) => {
@@ -57,36 +66,32 @@ function ProductCard( {prod}: ProductCardProps) {
         <Typography gutterBottom variant="h5" component="h2">
           {prod.name}
         </Typography>
+        
         <Typography variant="h6" component="h1">
          ${prod.price}
         </Typography>
+        {prod.quantity > 0 ? <Typography variant="h6" component="h1" className={classes.stock}>
+         In stock
+        </Typography> : <Typography variant="h6" component="h1" className={classes.stock}>
+         Out of stock
+        </Typography>}
+        
       </CardContent>
     </CardActionArea>
     <CardActions>
       { role === "user" ? 
-       (<Button size="small" color="primary" > Add to Cart </Button> ) : 
+       (<Button size="small" color="primary" disabled={addToCartBtn} > Add to Cart </Button> ) : 
         ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
         <Button size="small" color="primary"> 
           Edit
         </Button>
         </Link>
-        <Button size="small" color="primary" onClick={ ()=> {
-          // setConfirmDialog({
-          //   isOpen: true,
-          //   title: 'Are you sure to delete this item?',
-          //   subTitle: 'You can\'t undo this operation'
-          // })
-          prod._id && (handelDelete(prod._id)
-          
-          )}
-        }>
+        <Button size="small" color="primary" onClick={ ()=> prod._id && (handelDelete(prod._id))}>
           Delete
         </Button>
         </Grid>
         )
-        }
-      
-     
+      }
     </CardActions>
   </Card>
   {/* <ConfirmDialog confirmDialog={confirmDialog} /> */}

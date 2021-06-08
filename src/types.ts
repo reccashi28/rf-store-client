@@ -5,9 +5,12 @@ export const CREATE_NEW_USER = 'CREATE_NEW_USER'
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
 export const GET_USER_ROLE = 'GET_USER_ROLE'
 export const GET_USER_NAME = 'GET_USER_NAME'
+export const GET_USER_ID = 'GET_USER_ID'
 export const GET_USERS = 'GET_USERS'
 export const EDIT_USER = 'EDIT_USER'
-export const DELETE_USER = 'DELETE_USER'
+export const DIALOG_DATA= 'DIALOG_DATA'
+export const ITEMS_IN_CART= 'ITEMS_IN_CART'
+
 
 export type Product = {
     _id?: string
@@ -77,6 +80,12 @@ export type GetUserName = {
     }
 }
 
+export type GetUserId = {
+    type: typeof GET_USER_ID,
+    payload: {
+        data: string,
+    }
+}
 export type GetUsers = {
     type: typeof GET_USERS, 
     payload: {
@@ -91,16 +100,42 @@ export type EditUser = {
     }
 }
 
-export type DeleteUser = {
-    type: typeof DELETE_USER, 
+export type DialogState = {
+    isOpen: boolean,
+    title: string,
+    type: string,
+}
+export type GetDialogData = {
+    type: typeof DIALOG_DATA,
     payload: {
-        data: string,
+        dialog: DialogState
+    }
+}
+
+type itemsInCart = {
+    productId: Product;
+    quantity: number;
+}
+
+export type Cart = {
+    purchasedBy: string;
+    items: itemsInCart[];
+    totalAmount: number;
+}
+
+export type AddToCart = {
+    type: typeof ITEMS_IN_CART,
+    payload: {
+        items: Cart
     }
 }
 
 export type ProductActions = GetProductSuccess | CreateProduct
 
-export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | DeleteUser
+export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId
+
+export type CartActions = AddToCart
+
 
 export type ProductState = {
     displayProduct: Product[]
@@ -110,10 +145,17 @@ export type UserState = {
     isSignedIn: boolean,
     role: string,
     name: string,
+    userId: string,
     users: User[]
+    dialog: DialogState
+}
+
+export type CartState = {
+    inCart: Cart
 }
 
 export type AppState = {
     product: ProductState,
     user: UserState,
+    cart: CartState
 }
