@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { AppState, Product } from '../../types';
+import { AppState, ItemToCart, Product } from '../../types';
 import { Link, useHistory } from 'react-router-dom';
 import { CircularProgress, Grid } from '@material-ui/core';
 import { addItemToCart, deleteProduct, fetchProduct } from '../../redux/actions';
@@ -39,13 +39,9 @@ function ProductCard( {prod}: ProductCardProps) {
   const history = useHistory()
   const { role, userId } = useSelector( (state: AppState) => state.user)
   const [addToCartBtn, setAddToCartBtn] = useState(false)
-  const [addToCartData, setAddToCartData] = useState({
-    purchasedBy: "",
-    items: [{
-      productId: "",
-      quantity: 0,
-    }]
-  })
+  const [addToCartData, setAddToCartData] = useState<ItemToCart>()
+
+  //disabling add to cart button if product is not in stock
   if(prod.quantity <= 0){
     setAddToCartBtn(true)
   }
@@ -59,17 +55,20 @@ function ProductCard( {prod}: ProductCardProps) {
   }
 
   const handleAddToCart = (prodId: string) => {
-    setAddToCartData({
+   setAddToCartData({
       purchasedBy: userId,
       items: [{
         productId: prodId,
         quantity: 1,
       }]
     })
+    if(addToCartData !== undefined) {
+    console.log("you are inside")
 
-    setTimeout(() => {
-    dispatch(addItemToCart(addToCartData))
-    }, 1000);
+      dispatch(addItemToCart(addToCartData))
+    }
+    
+    
     console.log(addToCartData, "see if it is setting the data")
   }
   return (

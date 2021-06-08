@@ -45,11 +45,12 @@ function Header() {
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
 
-    console.log(inCart)
+    // console.log(inCart)
    const totalQuantity = inCart.items.reduce( (sum, i) => { 
         return sum + i.quantity
    }, 0)
 
+   console.log(totalQuantity, "total quantity")
     // useEffect( () => {
     //     dispatch(fetchCart(userId))
     // },[dispatch])

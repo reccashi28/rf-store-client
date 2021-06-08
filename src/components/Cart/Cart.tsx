@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "orange",
         margin: 40,
     },
+    spacing: {
+        marginTop: 40,
+    }
   }),
 );
 function Cart() {
@@ -53,7 +56,7 @@ function Cart() {
                         </Card>
                     )
                 })}
-                <Typography variant="h5" component="h5"><b>Total Amount:</b> {inCart.totalAmount}</Typography>
+                <Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {Math.round(inCart.totalAmount * 100)/100}</Typography>
                 <Button variant="contained" className={classes.button}>Proceed to Payment</Button>
             </Box>
         </>
