@@ -7,15 +7,17 @@ export const fetchCart = (userId: string) => {
     return async (dispatch: Dispatch) => {
         axios.get(`/cart/${userId}`)
             .then(res => {
-                dispatch(getItemsInCart(res.data))
+                console.log(res.data, "from fetching user cart")
+                res.data === null ? dispatch(getItemsInCart(undefined)) : dispatch(getItemsInCart(res.data))
+                
             })
             .catch(err => {
-                console.log('error')
+                console.log('error', err)
             })
     }
 }
 
-export const getItemsInCart = (items: Cart): CartActions => {
+export const getItemsInCart = (items: Cart | undefined): CartActions => {
     return {
         type: ITEMS_IN_CART,
         payload: {

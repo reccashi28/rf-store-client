@@ -5,7 +5,7 @@ const cartInitState: CartState = {
         purchasedBy: "",
         items: [],
         totalAmount: 0
-    }
+    } || undefined
 }
 
 const cart = (state=cartInitState, action: CartActions): CartState => {

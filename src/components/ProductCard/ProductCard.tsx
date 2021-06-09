@@ -47,7 +47,7 @@ function ProductCard( {prod}: ProductCardProps) {
   }
 
   // const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: '', subTitle: ''})
-  console.log(userId,"is user loggedin?")
+  console.log(role,"is user loggedin?")
   const handelDelete = (id: string) => {
     if(window.confirm('Are you sure you want to delete this product?')){
       dispatch(deleteProduct(id, history))
@@ -62,7 +62,7 @@ function ProductCard( {prod}: ProductCardProps) {
         quantity: 1,
       }]
     })
-    if(addToCartData !== undefined) {
+    if(addToCartData) {
     console.log("you are inside")
 
       dispatch(addItemToCart(addToCartData))
@@ -99,13 +99,7 @@ function ProductCard( {prod}: ProductCardProps) {
       </CardContent>
     </CardActionArea>
     <CardActions>
-      { role === "user" ? 
-       (<Button size="small" color="primary" disabled={addToCartBtn} onClick={() => {
-         if(prod._id){
-          handleAddToCart(prod._id)
-         }
-       }} > Add to Cart </Button> ) : 
-        ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
+      { role !== undefined && role === "admin" ? ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
         <Button size="small" color="primary"> 
           Edit
         </Button>
@@ -114,7 +108,12 @@ function ProductCard( {prod}: ProductCardProps) {
           Delete
         </Button>
         </Grid>
-        )
+        ) :
+       (<Button size="small" color="primary" disabled={addToCartBtn} onClick={() => {
+         if(prod._id){
+          handleAddToCart(prod._id)
+         }
+       }} > Add to Cart </Button> )        
       }
     </CardActions>
   </Card>

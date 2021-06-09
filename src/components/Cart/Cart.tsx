@@ -27,16 +27,19 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
+
+
+
 function Cart() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const { inCart } = useSelector( (state: AppState) => state.cart )
-    
+    console.log(inCart, "items in cart are")
     return (
         <>
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Typography className={classes.textColor} variant="h4" component="h4">You're Items</Typography>
-                {inCart.items.map( item => {
+                { inCart ? inCart.items?.map( item => {
                     return (
                         <Card className={classes.card}>
                             <img className={classes.media} src={item.productId.productImage} />
@@ -55,8 +58,8 @@ function Cart() {
                             </CardContent>
                         </Card>
                     )
-                })}
-                <Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {Math.round(inCart.totalAmount * 100)/100}</Typography>
+                }) : "Cart is empty" }
+                <Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {inCart ? Math.round(inCart.totalAmount * 100)/100 : 0}</Typography>
                 <Button variant="contained" className={classes.button}>Proceed to Payment</Button>
             </Box>
         </>

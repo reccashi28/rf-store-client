@@ -137,7 +137,7 @@ export type ItemToCart = {
 export type AddToCart = {
     type: typeof ITEMS_IN_CART,
     payload: {
-        items: Cart
+        items: Cart | undefined
     }
 }
 
@@ -162,7 +162,7 @@ export type UserState = {
 }
 
 export type CartState = {
-    inCart: Cart
+    inCart: Cart | undefined
 }
 
 export type AppState = {

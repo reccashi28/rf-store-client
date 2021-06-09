@@ -45,12 +45,20 @@ function Header() {
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
 
-    // console.log(inCart)
-   const totalQuantity = inCart.items.reduce( (sum, i) => { 
+    console.log(inCart, "inside incart")
+//    const totalQuantity = inCart && inCart.items ? 0 : inCart!.items.reduce( (sum, i) => { 
+//         return sum + i.quantity
+//    }, 0)
+
+   let totalQuantity2 = 0;
+
+   if(inCart && inCart.items){
+    totalQuantity2 = inCart.items.reduce( (sum, i) => { 
         return sum + i.quantity
    }, 0)
+   }
 
-   console.log(totalQuantity, "total quantity")
+//    console.log(totalQuantity, "total quantity")
     // useEffect( () => {
     //     dispatch(fetchCart(userId))
     // },[dispatch])
@@ -127,7 +135,7 @@ function Header() {
                         <Cart />
                         </Drawer>
                         <Button onClick={() => setCartOpen(true)}>
-                            <Badge badgeContent={totalQuantity} color="error">
+                            <Badge badgeContent={totalQuantity2} color="error">
                                 <AddShoppingCartIcon />
                             </Badge>
                         </Button>
