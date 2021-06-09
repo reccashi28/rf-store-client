@@ -55,19 +55,26 @@ function ProductCard( {prod}: ProductCardProps) {
   }
 
   const handleAddToCart = (prodId: string) => {
-   setAddToCartData({
-      purchasedBy: userId,
-      items: [{
-        productId: prodId,
-        quantity: 1,
-      }]
-    })
-    if(addToCartData) {
-    console.log("you are inside")
+    if(userId) {
+      setAddToCartData({
+        purchasedBy: userId,
+        items: [{
+          productId: prodId,
+          quantity: 1,
+        }]
+      })
 
-      dispatch(addItemToCart(addToCartData))
-    }
+      if(addToCartData) {
+        console.log("you are inside")
     
+          dispatch(addItemToCart(addToCartData))
+        }
+        
+    } else {
+      history.push('/signin')
+    }
+   
+
     
     console.log(addToCartData, "see if it is setting the data")
   }

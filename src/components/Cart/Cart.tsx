@@ -34,7 +34,6 @@ function Cart() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const { inCart } = useSelector( (state: AppState) => state.cart )
-    console.log(inCart, "items in cart are")
     return (
         <>
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
@@ -43,7 +42,6 @@ function Cart() {
                     return (
                         <Card className={classes.card}>
                             <img className={classes.media} src={item.productId.productImage} />
-                            {/* <CardMedia className={classes.media} image={} /> */}
                             <CardContent>
                                 <Typography>{item.productId.name}</Typography>
                                 <Box display="flex" justifyContent="center" alignItems="center">

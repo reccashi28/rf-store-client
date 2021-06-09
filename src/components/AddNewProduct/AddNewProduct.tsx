@@ -190,14 +190,13 @@ function AddNewProduct() {
                             <Button variant="contained" color="primary" onClick={ () => handelCancel()} >Cancel</Button>
                         </Grid>
                    </Grid>
-          <pre>{JSON.stringify(values, null, 3)}</pre>
 
                </Form>
             ) }
        </Formik>
-       {previewSource && (
+       {/* {previewSource && (
            <img src={previewSource} alt="image"/>
-       )}
+       )} */}
        <Notification notify={notify} setNotify={setNotify}/>
        </>
     )

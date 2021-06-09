@@ -1,6 +1,7 @@
 import axios from "axios"
 import { Dispatch } from "redux"
 import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID } from "../../types"
+import { fetchCart, getItemsInCart } from "./cart"
 
 export const createNewUser = (data: User, history: any, from : string) => {
     return async (dispatch: Dispatch) => {
@@ -19,9 +20,12 @@ export const userLogin = (loginData: UserLogIn, history: any) => {
   return async (dispatch: Dispatch) => {
     axios.post('/users/login', loginData)
       .then( res => {
+        const userId = res.data.userId
+        console.log(res.data.userId, "waht value is passed after loggedin")
         dispatch(getSignedInStatus(true))
         dispatch(getUserRole(res.data.role))
-        dispatch(getUserId(res.data.userid))
+        dispatch(getUserId(res.data.userId))
+        dispatch(getUserName(res.data.name))
         res.data.role === "admin" ? history.push('/dashboard') : history.push('/')
       })
       .catch( err => console.log(err))
@@ -34,6 +38,9 @@ export const userLogout = () => {
       .then( res => {
         dispatch(getSignedInStatus(false))
         dispatch(getUserRole("user"))
+        dispatch(getItemsInCart({purchasedBy: "",
+        items: [],
+        totalAmount: 0}))
       })
       .catch( err => console.log(err))
   }

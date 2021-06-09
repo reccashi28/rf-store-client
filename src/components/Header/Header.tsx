@@ -1,22 +1,22 @@
+import React, {  useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+
 import { Badge, Box, Button, Drawer, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
-import { getSignedInStatus, getUserRole, userLogout } from '../../redux/actions/user'
+
+import { userLogout } from '../../redux/actions/user'
 import { AppState } from '../../types'
 import Navbar from '../NavBar/Navbar'
-import axios from 'axios'
 import useUser from '../../hooks/useUser'
+import Cart from '../Cart/Cart';
+import Searchbar from '../Searchbar/Searchbar';
 
 import fbIcon from '../../assets/images/fb-icon.png'
 import instaIcon from '../../assets/images/instagram-icon.png'
 import liIcon from '../../assets/images/linkedin-icon.png'
-import logo from '../../assets/images/logo.png'
-import Cart from '../Cart/Cart';
-import Searchbar from '../Searchbar/Searchbar';
-import { fetchCart } from '../../redux/actions';
+
 
 const useStyles = makeStyles((theme) => ({
     images: {
@@ -45,36 +45,15 @@ function Header() {
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
 
-    console.log(inCart, "inside incart")
-//    const totalQuantity = inCart && inCart.items ? 0 : inCart!.items.reduce( (sum, i) => { 
-//         return sum + i.quantity
-//    }, 0)
-
-   let totalQuantity2 = 0;
+    let totalQuantity = 0;
 
    if(inCart && inCart.items){
-    totalQuantity2 = inCart.items.reduce( (sum, i) => { 
+    totalQuantity = inCart.items.reduce( (sum, i) => { 
         return sum + i.quantity
    }, 0)
-   }
-
-//    console.log(totalQuantity, "total quantity")
-    // useEffect( () => {
-    //     dispatch(fetchCart(userId))
-    // },[dispatch])
+   } 
 
     return (
-//         <AppBar position="static">
-//   <Toolbar>
-//     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-//       <MenuIcon />
-//     </IconButton>
-//     <Typography variant="h6" className={classes.title}>
-//       News
-//     </Typography>
-//     <Button color="inherit">Login</Button>
-//   </Toolbar>
-// </AppBar>
         <Grid container>
             <Grid item xs={10} sm={12} spacing={4}>      
                 <Grid item container justify="center"> <Typography variant="h2" component="h2">RF-STORE</Typography> </Grid>
@@ -135,7 +114,7 @@ function Header() {
                         <Cart />
                         </Drawer>
                         <Button onClick={() => setCartOpen(true)}>
-                            <Badge badgeContent={totalQuantity2} color="error">
+                            <Badge badgeContent={totalQuantity} color="error">
                                 <AddShoppingCartIcon />
                             </Badge>
                         </Button>
