@@ -63,20 +63,14 @@ function ProductCard( {prod}: ProductCardProps) {
           quantity: 1,
         }]
       })
-
       if(addToCartData) {
-        console.log("you are inside")
-    
+        console.log(addToCartData, "whats inside?")
           dispatch(addItemToCart(addToCartData))
         }
         
     } else {
       history.push('/signin')
     }
-   
-
-    
-    console.log(addToCartData, "see if it is setting the data")
   }
   return (
 <>
