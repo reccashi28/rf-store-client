@@ -8,7 +8,7 @@ import { AppState } from '../../types';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 345,
+      maxWidth: 200,
       paddingTop: 40,
     },
     media: {
@@ -60,7 +60,6 @@ const handleAddToCart = (prodId: string) => {
               component="img"
               alt={prod.name!}
               image={prod.productImage!}
-              height="440"
               title="Picture here"
             />
             <CardContent>
