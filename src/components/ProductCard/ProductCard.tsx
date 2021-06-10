@@ -47,33 +47,21 @@ function ProductCard( {prod}: ProductCardProps) {
   }
 
   // const [confirmDialog, setConfirmDialog] = useState({isOpen: false, title: '', subTitle: ''})
-  console.log(role,"is user loggedin?")
   const handelDelete = (id: string) => {
     if(window.confirm('Are you sure you want to delete this product?')){
       dispatch(deleteProduct(id, history))
     }
   }
-
-  console.log(prod._id, "product id inside product card")
-
   const handleAddToCart = (prodId: string) => {
-    if(userId) {
-      setAddToCartData({
+      dispatch(addItemToCart({
         purchasedBy: userId,
         items: [{
           productId: prodId,
-          quantity: 1,
+          quantity: 1
         }]
-      })
-      if(addToCartData) {
-        console.log(addToCartData, "whats inside?")
-          dispatch(addItemToCart(addToCartData))
-        }
-        
-    } else {
-      history.push('/signin')
-    }
+      }))
   }
+
   return (
 <>
   <Card className={classes.root + classes.padding} key={prod._id}>
