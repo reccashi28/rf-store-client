@@ -29,7 +29,20 @@ function Navbar() {
     const { role } = useSelector( (state: AppState) => state.user)
     return (
         <Box display="flex" justifyContent="center" alignItems="center">
-            { role === "user" || role === undefined ? (
+            { role === "admin"  ?
+            (
+                <Grid container>
+                    <Grid item>
+                        <ul className={classes.nav}>
+                            <li className={classes.nav_item}><Link className={classes.nav_link} to="/dashboard">Dashboard</Link></li>
+                            <li className={classes.nav_item}> <Link className={classes.nav_link} to='/product'>Product</Link></li>
+                            <li className={classes.nav_item}> <Link className={classes.nav_link} to='/addProduct'>Add New Product</Link></li>
+                        </ul>
+                    </Grid>
+                </Grid>
+                ) 
+                :
+                (
                 <Grid container>
                     <Grid item>
                     <ul className={classes.nav}>
@@ -38,18 +51,8 @@ function Navbar() {
                     </ul>
                     </Grid>
                 </Grid>
-            ):
-            (
-            <Grid container>
-                <Grid item>
-                    <ul className={classes.nav}>
-                        <li className={classes.nav_item}><Link className={classes.nav_link} to="/dashboard">Dashboard</Link></li>
-                        <li className={classes.nav_item}> <Link className={classes.nav_link} to='/product'>Product</Link></li>
-                        <li className={classes.nav_item}> <Link className={classes.nav_link} to='/addProduct'>Add New Product</Link></li>
-                    </ul>
-                </Grid>
-            </Grid>
             )
+            
         }
         </Box>
 

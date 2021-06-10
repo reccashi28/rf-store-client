@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -17,19 +16,8 @@ import {   getSignedInStatus, userLogin } from '../../redux/actions/user';
 import { useHistory } from 'react-router';
 import { AppState } from '../../types';
 import useUser from '../../hooks/useUser';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Link from '@material-ui/core/Link';
+import { fetchCart } from '../../redux/actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,19 +45,44 @@ const initialState = {
     password: ""
 }
 
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://rf-meyer.com/">
+        R.F. Meyer
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
 export default function SignIn() {
   const classes = useStyles();
   const dispatch = useDispatch()
   const { role } = useSelector( (state: AppState) => state.user)
+  const userId = useSelector( (state: AppState) => state.user.userId)
   const history = useHistory()
 
   const formik = useFormik( {
         initialValues: initialState,
         onSubmit: (values) => {
           dispatch(userLogin(values, history))
-          // role && role === "admin" ? history.push('/dashboard') : history.push('/home')
+          console.log(userId, "userid from login after login")
+          // if(userId){
+          //   dispatch( fetchCart(userId))
+          // }
         }
   })
+
+  console.log(userId, "userid from login")
+
+  useEffect(()=> {
+    dispatch(fetchCart(userId))
+  },[dispatch,userId])
+
+
   return (
     <Container component="main" maxWidth="xs">
     <CssBaseline />
@@ -116,20 +129,12 @@ export default function SignIn() {
         >
           Sign In
         </Button>
-        <Grid container justify="flex-end">
-          <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
-            </Link>
-          </Grid>
-        </Grid>
-        <pre>{JSON.stringify(formik.values, null, 3)}</pre>
+
       </form>
     </div>
     <Box mt={5}>
-      <Copyright />
-    </Box>
-    {/* <Notification notify={notify} setNotify={setNotify}/> */}
+        <Copyright />
+      </Box>
   </Container>
   );
 }

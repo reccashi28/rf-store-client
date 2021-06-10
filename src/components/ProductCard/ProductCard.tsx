@@ -54,6 +54,8 @@ function ProductCard( {prod}: ProductCardProps) {
     }
   }
 
+  console.log(prod._id, "product id inside product card")
+
   const handleAddToCart = (prodId: string) => {
     if(userId) {
       setAddToCartData({
@@ -76,6 +78,7 @@ function ProductCard( {prod}: ProductCardProps) {
 <>
   <Card className={classes.root + classes.padding} key={prod._id}>
     <CardActionArea>
+    <Link to={`/productdetails/${prod._id}`}>
       <CardMedia
         component="img"
         alt={prod.name}
@@ -83,6 +86,7 @@ function ProductCard( {prod}: ProductCardProps) {
         height="440"
         title="Picture here"
       />
+      </Link>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {prod.name}

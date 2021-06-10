@@ -3,14 +3,19 @@ import { AnyAction, Dispatch } from "redux"
 import { Cart, CartActions, ITEMS_IN_CART, ItemToCart } from "../../types"
 
 export const fetchCart = (userId: string) => {
-    return async (dispatch: any) => {
-        axios.get(`/cart/${userId}`)
+    return async (dispatch: Dispatch) => {
+        if(userId) {
+            axios.get(`/cart/${userId}`)
             .then(res => {
-                dispatch(getItemsInCart(res.data))
+                if(res.data){
+                    dispatch(getItemsInCart(res.data))
+                }
             })
             .catch(err => {
-                console.log('error', err)
+                
             })
+        }
+       
     }
 }
 
@@ -27,7 +32,10 @@ export const addItemToCart = (data: ItemToCart) => {
     return async (dispatch: Dispatch) => {
         axios.post('/cart', data)
             .then( res => {
-                console.log(res.data)
+                if(res.data) {
+                    console.log("item added to cart")
+                    fetchCart(data.purchasedBy)
+                }
             })
             .catch(err => {
                 console.log(err)

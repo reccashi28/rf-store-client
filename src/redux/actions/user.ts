@@ -26,6 +26,7 @@ export const userLogin = (loginData: UserLogIn, history: any) => {
         dispatch(getUserRole(res.data.role))
         dispatch(getUserId(res.data.userId))
         dispatch(getUserName(res.data.name))
+        // dispatch(fetchCart(userId))
         res.data.role === "admin" ? history.push('/dashboard') : history.push('/')
       })
       .catch( err => console.log(err))

@@ -13,17 +13,28 @@ import Login from './components/Login/Login';
 import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard'
 import DashBoardUserForm from './components/DashBoardUserForm/DashBoardUserForm';
+import PrivateRoute, {  PrivateRouteProps } from './components/PrivateRoute/PrivateRoute';
+import { AppState } from './types';
+import { useSelector } from 'react-redux';
+import ProductDetails from './components/ProductDetails/ProductDetails';
 
 axios.defaults.withCredentials = true;
 
+const useStyles = makeStyles({
+  root: {
+    paddingTop: 40,
+  },
+});
+
 function App() {
-  const useStyles = makeStyles({
-    root: {
-      paddingTop: 40,
-    },
-  });
-  
     const classes = useStyles();
+    // const { isSignedIn, role} = useSelector( (state: AppState) => state.user)
+
+    const initialStatePrivateRoute: PrivateRouteProps = {
+       path: ""
+    }
+
+    // console.log(initialStatePrivateRoute, "private value")
   return (
     <div>
     <Grid container className={classes.root}>
@@ -35,17 +46,8 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/dashboard">
-              <Dashboard />
-            </Route>
             <Route  path="/product">
               <ProductCatalog />
-            </Route>
-            <Route path="/addProduct">
-              <AddNewProduct />
-            </Route>
-            <Route path="/editProduct/:_id">
-              <AddNewProduct />
             </Route>
             <Route path="/signup">
               <Signup />
@@ -53,8 +55,29 @@ function App() {
             <Route path="/signin">
               <Login />
             </Route>
-            <Route exact path="/dashboard/edit/:_id">
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+              {/* <Dashboard />
+            </PrivateRoute> */}
+            {/* <Route  path="/dashboard">
+              <Dashboard />
+            </Route> */}
+            {/* <PrivateRoute path="/addProduct" component={AddNewProduct} /> */}
+            <Route path="/addProduct">
+              <AddNewProduct />
+            </Route>
+            {/* <PrivateRoute path="/editProduct/:_id" component={AddNewProduct} /> */}
+            <Route path="/editProduct/:_id">
+              <AddNewProduct />
+            </Route>
+            {/* <PrivateRoute path="/dashboard/edit/:_id" component={DashBoardUserForm} /> */}
+            
+            {/* <Route exact path="/dashboard/edit/:_id">
               <DashBoardUserForm />
+            </Route> */}
+            {/* <PrivateRoute path="/dashboard/adduser" component={DashBoardUserForm} /> */}
+            /productdetails/
+            <Route exact path="/productdetails/:id">
+              <ProductDetails />
             </Route>
             <Route exact path="/dashboard/adduser">
               <DashBoardUserForm />

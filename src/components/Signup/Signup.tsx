@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -17,20 +16,10 @@ import { createNewUser } from '../../redux/actions/user';
 import Notification from '../Notification/Notification'
 import { useHistory } from 'react-router';
 import { AppState } from '../../types';
+import { Link } from 'react-router-dom';
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://rf-meyer.com/">
-        R.F. Meyer
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -171,17 +160,15 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/signin">
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
-          <pre>{JSON.stringify(formik.values, null, 3)}</pre>
+          {/* <pre>{JSON.stringify(formik.values, null, 3)}</pre> */}
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+
       <Notification notify={notify} setNotify={setNotify}/>
     </Container>
   );

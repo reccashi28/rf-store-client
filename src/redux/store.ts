@@ -5,6 +5,7 @@ import { AppState } from '../types';
 import createRootReducer from './reducers';
 
 const middlewares = [thunk]
+let composeEnhancers = compose
 
 const initState: AppState = {
     product: {
@@ -31,5 +32,10 @@ const initState: AppState = {
     }
 }
 
-const store = createStore( createRootReducer(), initState ,compose(applyMiddleware(...middlewares)));
+if ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+    composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  }
+
+
+const store = createStore( createRootReducer(), initState ,composeEnhancers(applyMiddleware(...middlewares)));
 export default store;

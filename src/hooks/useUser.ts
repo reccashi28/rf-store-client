@@ -7,7 +7,9 @@ import { fetchCart, getSignedInStatus, getUserId, getUserName, getUserRole } fro
 function useUser() {
    const dispatch = useDispatch();
     const { isSignedIn } = useSelector( (state: AppState) => state.user)
-    
+    const { inCart } = useSelector( (state: AppState) => state.cart)
+
+    console.log(inCart, "items in cart")
    const fetchCookie = async () => {
     try {
       const res = await axios.get('/users/isloggedin');
@@ -20,6 +22,8 @@ function useUser() {
         dispatch(getUserName(resName))
         dispatch(getUserId(userId))
         dispatch(fetchCart(userId))
+
+        
     } catch (e) {
       console.log(e);
     }
