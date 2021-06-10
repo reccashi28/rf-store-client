@@ -30,6 +30,15 @@ const initState: AppState = {
         } || undefined
     }
 }
-
-const store = createStore( createRootReducer(), initState ,compose(applyMiddleware(...middlewares)));
+let composeEnhancers = compose;
+ if (process.env.NODE_ENV === "development") {
+   if ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+     composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+   }
+ }
+const store = createStore(
+  createRootReducer(),
+  initState,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
 export default store;

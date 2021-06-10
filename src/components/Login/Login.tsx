@@ -17,6 +17,7 @@ import {   getSignedInStatus, userLogin } from '../../redux/actions/user';
 import { useHistory } from 'react-router';
 import { AppState } from '../../types';
 import useUser from '../../hooks/useUser';
+import { fetchCart } from '../../redux/actions';
 
 function Copyright() {
   return (
@@ -62,6 +63,11 @@ export default function SignIn() {
   const dispatch = useDispatch()
   const { role } = useSelector( (state: AppState) => state.user)
   const history = useHistory()
+   const id = useSelector((state: AppState) => state.user.userId);
+
+   useEffect(()=> {
+     dispatch(fetchCart(id))
+   },[dispatch,id])
 
   const formik = useFormik( {
         initialValues: initialState,

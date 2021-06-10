@@ -3,7 +3,7 @@ import { AnyAction, Dispatch } from "redux"
 import { Cart, CartActions, ITEMS_IN_CART, ItemToCart } from "../../types"
 
 export const fetchCart = (userId: string) => {
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch) => {
         axios.get(`/cart/${userId}`)
             .then(res => {
                 dispatch(getItemsInCart(res.data))

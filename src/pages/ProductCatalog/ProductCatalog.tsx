@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import ProductCard from '../../components/ProductCard/ProductCard';
 
-import { fetchProduct } from '../../redux/actions';
+import { fetchCart, fetchProduct } from '../../redux/actions';
 import { AppState, Product } from '../../types';
 import { Grid, makeStyles } from '@material-ui/core';
 
@@ -14,18 +14,19 @@ function ProductCatalog() {
     const dispatch = useDispatch();
     const { displayProduct } = useSelector( (state: AppState) => state.product)
     console.log(displayProduct, "from all products component")
-    
+    const id = useSelector((state: AppState) => state.user.userId);
     const useStyles = makeStyles({
         root: {
           paddingTop: 40,
         },
       });
-      
+
         const classes = useStyles();
 
     useEffect( () => {
         dispatch(fetchProduct())
-    }, [dispatch])
+        dispatch(fetchCart(id))
+    }, [dispatch,id])
 
     return (
         <Grid container className={classes.root}>

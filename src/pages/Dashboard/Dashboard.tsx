@@ -42,7 +42,7 @@ function Dashboard() {
   //   openDialog: boolean
   //   setOpenDialog: any
   // }
-  
+
 function handleEditUser(){
   dispatch(getDialogData({isOpen: true, title: "Update User", type: "edit"}))
   // setUserDialogForm({isOpen: true, title: "Update User", type: "edit"})
