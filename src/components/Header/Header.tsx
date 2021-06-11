@@ -1,8 +1,8 @@
 import React, {  useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { Badge, Box, Button, Drawer, Grid, Typography } from '@material-ui/core'
+import { Badge, Box, Button, CircularProgress, Drawer, Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 
@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
     const dispatch = useDispatch()
-    const { role, name, userId } = useSelector( (state: AppState) => state.user )
+    const { role, name, pending} = useSelector( (state: AppState) => state.user )
     const { inCart } = useSelector( (state: AppState) => state.cart )
 
     const classes = useStyles();
-    const history = useHistory();
+    // const history = useHistory();
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
 
@@ -55,20 +55,20 @@ function Header() {
 
     return (
         <Grid container>
-            <Grid item xs={10} sm={12} spacing={4}>      
+            <Grid item xs={10} sm={12} >      
                 <Grid item container justify="center"> <Typography variant="h2" component="h2">RF-STORE</Typography> </Grid>
                 <Grid item container justify="space-between"> 
                     <Grid item xs={3} sm={4}>
                     <Box my={2}  display="flex" alignItems="center">
                        <ul className={classes.socialMediaContainer}>
                            <li className={classes.listItem}>
-                               <a href="#"><img className={classes.images} src={fbIcon}></img></a>
+                               <a href="nothing"><img className={classes.images} src={fbIcon} alt="Facebook Icon"></img></a>
                             </li>
                            <li className={classes.listItem}>
-                               <a href="#"><img className={classes.images} src={instaIcon}></img></a>
+                               <a href="nothing"><img className={classes.images} src={instaIcon} alt="Instagram Icon"></img></a>
                             </li>
                            <li className={classes.listItem}>
-                               <a href="#"><img className={classes.images} src={liIcon}></img></a>
+                               <a href="nothing"><img className={classes.images} src={liIcon} alt="LinkedIn Icon"></img></a>
                             </li>
 
                        </ul>
@@ -78,7 +78,7 @@ function Header() {
                         <Box display="flex" justifyContent="center" p={2}> <Searchbar /></Box>
                     </Grid>
 
-                    {isSignedIn ? 
+                    { isSignedIn ? 
                     
                     <Grid item xs={5} sm={4} container justify="flex-end">
                         <Box m={2} pr={2} display="flex" alignItems="center">
@@ -90,10 +90,14 @@ function Header() {
                     </Grid> 
                     
                     : 
-                    
+                    pending ? 
                     <Grid item xs={5} sm={4} container justify="flex-end">
                         <Link to="/signin"><Button variant="contained" color="primary">Login</Button></Link>
                         <Link to="/signup"><Button variant="contained" color="secondary">Signup</Button></Link>
+                    </Grid>
+                    :
+                    <Grid item xs={5} sm={4} container justify="flex-end">
+                        <CircularProgress />
                     </Grid>
                     }
                     

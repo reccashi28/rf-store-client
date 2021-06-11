@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { AppState } from '../../types'
-import AddNewProduct from '../AddNewProduct/AddNewProduct'
+// import AddNewProduct from '../AddNewProduct/AddNewProduct'
 
 const useStyles = makeStyles((theme) => ({
     nav: {

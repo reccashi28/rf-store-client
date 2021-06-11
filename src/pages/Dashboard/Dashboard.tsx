@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -9,12 +13,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@material-ui/core';
+
 import { deleteUser, fetchUser, getDialogData } from '../../redux/actions';
 import { AppState } from '../../types';
-import DashBoardUserForm from '../../components/DashBoardUserForm/DashBoardUserForm';
-import { Link, useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+// import DashBoardUserForm from '../../components/DashBoardUserForm/DashBoardUserForm';
 
 const useStyles = makeStyles({
   table: {
@@ -30,7 +33,6 @@ function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { users } = useSelector((state: AppState) => state.user)
-  const [userDialogForm, setUserDialogForm] = useState({isOpen: false, title: '', type: ''})
 
   useEffect( () => {
     dispatch(fetchUser())
@@ -42,14 +44,17 @@ function Dashboard() {
   //   openDialog: boolean
   //   setOpenDialog: any
   // }
+
+  // dispatch(getDialogData({isOpen: true, title: "Add New User", type: "add"}))
   
 function handleEditUser(){
   dispatch(getDialogData({isOpen: true, title: "Update User", type: "edit"}))
-  // setUserDialogForm({isOpen: true, title: "Update User", type: "edit"})
   }
 
 function handleDelete(userId: string) {
-  dispatch(deleteUser(userId, history))
+  if (window.confirm("Are you sure you want to delete this user?")) {
+    dispatch(deleteUser(userId, history))
+  } 
 }
 
 function handleAddUser() {
@@ -64,7 +69,9 @@ function handleAddUser() {
         <TableHead>
           <TableRow>
             <TableCell align="right" colSpan={tableHeaders.length}>
-            <Link to="/dashboard/adduser"><Button variant="contained" color="primary" onClick={() => handleAddUser()}>Add User</Button></Link>
+              <Link to={"/dashboard/adduser"}>
+                <Button variant="contained" color="primary" onClick={() => handleAddUser()}>Add User</Button>
+              </Link>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -79,13 +86,13 @@ function handleAddUser() {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>
-              <Link to={`/dashboard/edit/${user._id}`}>
-                  <Button onClick={handleEditUser}>
+                <Link to={`/dashboard/edit/${user._id!}`}>
+                  <Button onClick={() => handleEditUser()}>
                     <EditIcon />
                   </Button>
                 </Link>
-                <Button onClick={ () => user._id ? handleDelete(user._id) : "Loading"}>
-                    <DeleteIcon />
+                <Button onClick={ () => handleDelete(user._id!)}>
+                  <DeleteIcon />
                 </Button>
               </TableCell>
             </TableRow>

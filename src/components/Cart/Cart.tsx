@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
+import { Box, Button, Card, CardContent, createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart } from '../../redux/actions';
@@ -65,7 +65,7 @@ function Cart() {
                 { inCart ? inCart.items?.map( item => {
                     return (
                         <Card className={classes.card}>
-                            <img className={classes.media} src={item.productId.productImage} />
+                            <img className={classes.media} src={item.productId.productImage} alt={item.productId.name} />
                             <CardContent>
                                 <Typography>{item.productId.name}</Typography>
                                 <Box display="flex" justifyContent="center" alignItems="center">

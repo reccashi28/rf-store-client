@@ -1,11 +1,13 @@
-import { Button, CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Link, MenuItem, TextField, Typography } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import React, { useState } from 'react'
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import React from 'react'
+import { useHistory, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { createNewUser, fetchUser, updateUser } from '../../redux/actions';
+
+import { Button, Grid, MenuItem, TextField } from '@material-ui/core';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { createNewUser, updateUser } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, User } from '../../types';
 
@@ -44,20 +46,13 @@ const validationSchema = yup.object({
 })
 
 function DashBoardUserForm() {
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const classes = useStyles();
+  // const theme = useTheme();
+  // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const history = useHistory()
   const { _id } = useParams<{ _id: string }>()
-  // const location = useLocation()
-  // const {userDialogForm, setUserDialogForm} = props;
-  const classes = useStyles();
   const dispatch= useDispatch()
   const { users, dialog } = useSelector( (state: AppState) => state.user)
-  // const  loc_id = location.state;
-  
-  // console.log(loc_id)
-  // // const [userDialogForm, setUserDialogForm] = useState({isOpen: false, title: '', type: ''})
   const filteredData: any = users.filter ( user => user._id === _id)
   console.log(filteredData, "from dashfrom")
 
@@ -83,7 +78,7 @@ function DashBoardUserForm() {
   }
 
   const dataValue = _id ? filteredData[0] : initialState;
-
+ 
   const formik = useFormik( {
     initialValues: dataValue,
     validationSchema: validationSchema,
@@ -172,14 +167,13 @@ function DashBoardUserForm() {
                 </TextField>
               </Grid>
             </Grid>
-            <pre>{JSON.stringify(formik.values, null, 3)}</pre>
           </form>
         </div>
       <Button autoFocus onClick={handleClose} color="primary" variant="contained">
         Cancel
       </Button>
 
-      {dialog.type === "add" ? 
+      { dialog.type === "add" ? 
       
       <Button type="submit" color="primary" variant="contained" onClick={ () => handleAddUser(formik.values)}>
         Submit

@@ -10,6 +10,7 @@ let composeEnhancers = compose
 const initState: AppState = {
     product: {
         displayProduct: [],
+        searchProduct: "",
     },
     user: {
         isSignedIn: false,
@@ -22,6 +23,7 @@ const initState: AppState = {
             title: "",
             type: ""
         },
+        pending: false,
     },
     cart: {
         inCart: {
@@ -29,7 +31,7 @@ const initState: AppState = {
             items: [],
             totalAmount: 0
         } || undefined
-    }
+    },
 }
 
 if ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {

@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../types';
 import axios from 'axios'
-import { fetchCart, getSignedInStatus, getUserId, getUserName, getUserRole } from '../redux/actions';
+import { fetchCart, fetchPending, getSignedInStatus, getUserId, getUserName, getUserRole } from '../redux/actions';
 
 function useUser() {
    const dispatch = useDispatch();
     const { isSignedIn } = useSelector( (state: AppState) => state.user)
-    const { inCart } = useSelector( (state: AppState) => state.cart)
 
-    console.log(inCart, "items in cart")
    const fetchCookie = async () => {
     try {
+      dispatch(fetchPending())
       const res = await axios.get('/users/isloggedin');
       const resloggedIn =  res.data.signedin
       const resRole =  res.data.role

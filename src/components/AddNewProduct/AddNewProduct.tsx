@@ -3,7 +3,7 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import {TextField} from 'formik-material-ui';
-import { Box, Button, CircularProgress, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Button, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import axios from 'axios'
 
 import { createProduct, editProduct } from '../../redux/actions';
@@ -56,7 +56,7 @@ function AddNewProduct() {
     const [notify, setNotify] = useState({isOpen: false, message: '', type: ''})
     const classes = useStyles();
     const [selectedImage, setselectedImage] = useState<any | string>()
-    const [previewSource, setPreviewSopurce] = useState("")
+    // const [previewSource, setPreviewSopurce] = useState("")
     const baseUrl = `https://api.cloudinary.com/v1_1/${cloudinary_name}/image/upload`
 
     const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,8 +69,8 @@ function AddNewProduct() {
         const reader = new FileReader();
         reader.readAsDataURL(file)
         reader.onloadend = async () => {
-            const result: string = await reader.result as string
-           result ? setPreviewSopurce(result) : <CircularProgress />
+            // const result: string = await reader.result as string
+        //    result ? setPreviewSopurce(result) : <CircularProgress />
         }
     }
 
@@ -98,7 +98,6 @@ function AddNewProduct() {
 
             const response = await axios.post(baseUrl,  formData, {withCredentials: false})
             const data = await response.data;
-            console.log(data, 'post to cloudinary')
             const productImageUrl = await data.secure_url;
             values.productImage = productImageUrl;
             dispatch(createProduct(values, history))

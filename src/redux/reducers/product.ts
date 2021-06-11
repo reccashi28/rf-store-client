@@ -1,7 +1,8 @@
-import { CREATE_NEW_PRODUCT, GET_PRODUCT_SUCCESS, ProductActions, ProductState } from "../../types";
+import { CREATE_NEW_PRODUCT, GET_PRODUCT_SUCCESS, ProductActions, ProductState, SEARCH_KEYWORD } from "../../types";
 
 const initialState: ProductState = {
-    displayProduct: []
+    displayProduct: [],
+    searchProduct: ""
 }
 const product = ( state = initialState, action: ProductActions): ProductState => {
     switch(action.type) {
@@ -18,6 +19,10 @@ const product = ( state = initialState, action: ProductActions): ProductState =>
             return {
                 ...state, displayProduct: [...state.displayProduct, data]
             }
+        }
+
+        case SEARCH_KEYWORD: {
+            return {...state, searchProduct: action.payload.text}
         }
 
         default: {

@@ -10,7 +10,8 @@ export const GET_USERS = 'GET_USERS'
 export const EDIT_USER = 'EDIT_USER'
 export const DIALOG_DATA= 'DIALOG_DATA'
 export const ITEMS_IN_CART= 'ITEMS_IN_CART'
-
+export const SEARCH_KEYWORD = 'SEARCH_KEYWORD'
+export const FETCH_PENDING = 'FETCH_PENDING'
 
 export type Product = {
     _id?: string
@@ -24,6 +25,12 @@ export type Product = {
     productImage?: string;
 }
 
+export type SearchProduct = {
+    type: typeof SEARCH_KEYWORD
+    payload: {
+      text: string
+    }
+  }
 
 export type GetProductSuccess = {
     type: typeof GET_PRODUCT_SUCCESS,
@@ -141,15 +148,19 @@ export type AddToCart = {
     }
 }
 
-export type ProductActions = GetProductSuccess | CreateProduct
+export type FetchDataLoader = {
+    type: typeof FETCH_PENDING
+}
 
-export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId
+export type ProductActions = GetProductSuccess | CreateProduct | SearchProduct 
+
+export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId | FetchDataLoader
 
 export type CartActions = AddToCart
 
-
 export type ProductState = {
-    displayProduct: Product[]
+    displayProduct: Product[],
+    searchProduct: string
 }
 
 export type UserState = {
@@ -157,8 +168,9 @@ export type UserState = {
     role: string,
     name: string,
     userId: string,
-    users: User[]
-    dialog: DialogState
+    users: User[],
+    dialog: DialogState,
+    pending: boolean,
 }
 
 export type CartState = {
@@ -168,5 +180,5 @@ export type CartState = {
 export type AppState = {
     product: ProductState,
     user: UserState,
-    cart: CartState
+    cart: CartState,
 }

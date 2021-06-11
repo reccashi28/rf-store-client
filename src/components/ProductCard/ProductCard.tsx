@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,12 +7,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { AppState, ItemToCart, Product } from '../../types';
+import { AppState, Product } from '../../types';
 import { Link, useHistory } from 'react-router-dom';
-import { CircularProgress, Grid } from '@material-ui/core';
-import { addItemToCart, deleteProduct, fetchProduct } from '../../redux/actions';
+import {  Grid } from '@material-ui/core';
+import { addItemToCart, deleteProduct } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+// import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 type ProductCardProps = {
     prod: Product
@@ -20,9 +20,7 @@ type ProductCardProps = {
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-    height: 400,
-    maxHeight: 400,
+    width: 345,
     paddingTop: 40,
   },
   padding: {
@@ -39,7 +37,7 @@ function ProductCard( {prod}: ProductCardProps) {
   const history = useHistory()
   const { role, userId } = useSelector( (state: AppState) => state.user)
   const [addToCartBtn, setAddToCartBtn] = useState(false)
-  const [addToCartData, setAddToCartData] = useState<ItemToCart>()
+  // const [addToCartData, setAddToCartData] = useState<ItemToCart>()
 
   //disabling add to cart button if product is not in stock
   if(prod.quantity <= 0){
@@ -117,4 +115,4 @@ function ProductCard( {prod}: ProductCardProps) {
 
 }
 
-export default ProductCard
+export default React.memo(ProductCard)

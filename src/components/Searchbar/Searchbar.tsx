@@ -1,5 +1,8 @@
-import { createStyles, InputBase, makeStyles, Theme } from '@material-ui/core'
+import { createStyles, InputBase, makeStyles } from '@material-ui/core'
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import { searchProduct } from '../../redux/actions';
 
 const useStyles = makeStyles((theme) => 
     // input: {
@@ -24,6 +27,8 @@ const useStyles = makeStyles((theme) =>
 
 function Searchbar() {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const history = useHistory()
     return (
         <div>
             {/* <input type="text" name="searchbar" id="" placeholder="search" /> */}
@@ -33,6 +38,7 @@ function Searchbar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onChange={(e) => dispatch(searchProduct(e.target.value, history))}
               inputProps={{ 'aria-label': 'search' }}
             />
         </div>

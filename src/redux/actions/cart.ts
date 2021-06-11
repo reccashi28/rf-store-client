@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AnyAction, Dispatch } from "redux"
+import { Dispatch } from "redux"
 import { Cart, CartActions, ITEMS_IN_CART, ItemToCart } from "../../types"
 
 export const fetchCart = (userId: string) => {

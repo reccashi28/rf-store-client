@@ -1,8 +1,8 @@
 import { Dispatch } from "redux"
 import axios from 'axios'
 
-import { CREATE_NEW_PRODUCT, GET_PRODUCT_SUCCESS, Product, ProductActions } from "../../types"
-import { CircularProgress } from "@material-ui/core"
+import { CREATE_NEW_PRODUCT, GET_PRODUCT_SUCCESS, Product, ProductActions, SEARCH_KEYWORD } from "../../types"
+// import { CircularProgress } from "@material-ui/core"
 
 export const fetchProduct = () => {
     return async (dispatch: Dispatch) => {
@@ -67,6 +67,16 @@ export const addProduct = (data: Product): ProductActions => {
     type: CREATE_NEW_PRODUCT,
     payload: {
       data,
+    }
+  }
+}
+
+export const searchProduct = (text: string, history: any): ProductActions => {
+  history.push('/product')
+  return {
+    type: SEARCH_KEYWORD,
+    payload: {
+      text,
     }
   }
 }
