@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID, FETCH_PENDING } from "../../types"
+import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID, FETCH_PENDING, FETCH_ERROR } from "../../types"
 import { getItemsInCart } from "./cart"
 
 export const createNewUser = (data: User, history: any, from : string) => {
@@ -10,9 +10,15 @@ export const createNewUser = (data: User, history: any, from : string) => {
           if(res.data) {
             fetchUser()
             from === "signup" ? history.push('/signin') : history.push('/dashboard')
+            
           }
         })
-        .catch( err => console.log(err))
+        .catch( err => {
+          if(err.response.data.message) {
+            createUserError(err.response.data.message)
+            console.log(err.response.data.message)
+          }
+        })
     }
   }
 
@@ -20,7 +26,6 @@ export const userLogin = (loginData: UserLogIn, history: any) => {
   return async (dispatch: Dispatch) => {
     axios.post('/users/login', loginData)
       .then( res => {
-        console.log(res.data.userId, "waht value is passed after loggedin")
         dispatch(getSignedInStatus(true))
         dispatch(getUserRole(res.data.role))
         dispatch(getUserId(res.data.userId))
@@ -138,5 +143,15 @@ export const updateUser = (data: User, history: any) => {
 export const fetchPending = (): UserActions => {
   return {
     type: FETCH_PENDING,
+  }
+}
+
+
+export const createUserError = ( data: Error | null): UserActions => {
+  return {
+    type: FETCH_ERROR,
+    payload: {
+      data,
+    }
   }
 }

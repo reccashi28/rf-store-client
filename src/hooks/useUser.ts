@@ -9,8 +9,8 @@ function useUser() {
     const { isSignedIn } = useSelector( (state: AppState) => state.user)
 
    const fetchCookie = async () => {
+    dispatch(fetchPending())
     try {
-      dispatch(fetchPending())
       const res = await axios.get('/users/isloggedin');
       const resloggedIn =  res.data.signedin
       const resRole =  res.data.role

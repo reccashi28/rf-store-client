@@ -1,4 +1,7 @@
 import React, {  useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -7,11 +10,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Backdrop, CircularProgress, Grid } from '@material-ui/core';
+
 import { AppState, Product } from '../../types';
-import { Link, useHistory } from 'react-router-dom';
-import {  Grid } from '@material-ui/core';
-import { addItemToCart, deleteProduct } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, deleteProduct, fetchCart, fetchPendingItems } from '../../redux/actions';
 // import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 type ProductCardProps = {
@@ -29,6 +31,11 @@ const useStyles = makeStyles({
   stock: {
     color: "#00E041"
   },
+  backdrop: {
+    zIndex: 10,
+    color: '#fff',
+    backgroundColor: 'rgba(0,0,0,0.1)'
+  },
 });
 
 function ProductCard( {prod}: ProductCardProps) {
@@ -36,7 +43,10 @@ function ProductCard( {prod}: ProductCardProps) {
   const dispatch = useDispatch()
   const history = useHistory()
   const { role, userId } = useSelector( (state: AppState) => state.user)
+  const pending = useSelector( (state: AppState) => state.cart.pending)
+  const items = useSelector( (state: AppState) => state.cart.inCart)
   const [addToCartBtn, setAddToCartBtn] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   // const [addToCartData, setAddToCartData] = useState<ItemToCart>()
 
   //disabling add to cart button if product is not in stock
@@ -51,6 +61,7 @@ function ProductCard( {prod}: ProductCardProps) {
     }
   }
   const handleAddToCart = (prodId: string) => {
+    setIsOpen(true)
       dispatch(addItemToCart({
         purchasedBy: userId,
         items: [{
@@ -58,8 +69,13 @@ function ProductCard( {prod}: ProductCardProps) {
           quantity: 1
         }]
       }))
+    console.log('you click add to cart btn')
   }
-
+  const handleClose = () => {
+    dispatch(fetchCart(userId))
+    setIsOpen(false)
+  }
+  console.log(isOpen, " is backdrop open?")
   return (
 <>
   <Card className={classes.root + classes.padding} key={prod._id}>
@@ -109,6 +125,10 @@ function ProductCard( {prod}: ProductCardProps) {
     </CardActions>
   </Card>
   {/* <ConfirmDialog confirmDialog={confirmDialog} /> */}
+  <Backdrop className={classes.backdrop} open={isOpen} onClick={() => handleClose()}>
+            <CircularProgress color="inherit" />
+  </Backdrop>
+
 </>
   );
 

@@ -24,13 +24,15 @@ const initState: AppState = {
             type: ""
         },
         pending: false,
+        error: null
     },
     cart: {
         inCart: {
             purchasedBy: "",
             items: [],
             totalAmount: 0
-        } || undefined
+        } || undefined,
+        pending: false,
     },
 }
 

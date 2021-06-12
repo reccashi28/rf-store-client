@@ -12,6 +12,7 @@ export const DIALOG_DATA= 'DIALOG_DATA'
 export const ITEMS_IN_CART= 'ITEMS_IN_CART'
 export const SEARCH_KEYWORD = 'SEARCH_KEYWORD'
 export const FETCH_PENDING = 'FETCH_PENDING'
+export const FETCH_ERROR = 'FETCH_ERROR'
 
 export type Product = {
     _id?: string
@@ -67,6 +68,12 @@ export type CreateNewUser = {
     }
 }
 
+export type CreateNewUserError ={
+    type: typeof FETCH_ERROR,
+    payload: {
+        data: Error | null
+    }
+}
 export type SigninSuccess = {
     type: typeof SIGN_IN_SUCCESS,
     payload: {
@@ -106,6 +113,7 @@ export type EditUser = {
         data: User,
     }
 }
+
 
 export type DialogState = {
     isOpen: boolean,
@@ -149,14 +157,14 @@ export type AddToCart = {
 }
 
 export type FetchDataLoader = {
-    type: typeof FETCH_PENDING
+    type: typeof FETCH_PENDING,
 }
 
 export type ProductActions = GetProductSuccess | CreateProduct | SearchProduct 
 
-export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId | FetchDataLoader
+export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId | FetchDataLoader | CreateNewUserError
 
-export type CartActions = AddToCart
+export type CartActions = AddToCart | FetchDataLoader
 
 export type ProductState = {
     displayProduct: Product[],
@@ -171,10 +179,12 @@ export type UserState = {
     users: User[],
     dialog: DialogState,
     pending: boolean,
+    error: Error | null
 }
 
 export type CartState = {
-    inCart: Cart | undefined
+    inCart: Cart | undefined,
+    pending: boolean
 }
 
 export type AppState = {

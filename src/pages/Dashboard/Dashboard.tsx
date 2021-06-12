@@ -80,7 +80,7 @@ function handleAddUser() {
         </TableHead>
         <TableBody>
           {users.map( user => {
-           return <TableRow key={user._id}>
+           return <TableRow key={user._id!}>
               <TableCell>{user.firstName}</TableCell>
               <TableCell>{user.lastName}</TableCell>
               <TableCell>{user.email}</TableCell>

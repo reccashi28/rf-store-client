@@ -1,4 +1,4 @@
-import { DIALOG_DATA, FETCH_PENDING, GET_USERS, GET_USER_ID, GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
+import { DIALOG_DATA, FETCH_ERROR, FETCH_PENDING, GET_USERS, GET_USER_ID, GET_USER_NAME, GET_USER_ROLE, SIGN_IN_SUCCESS, UserActions, UserState } from "../../types";
 
 const initialState: UserState = {
     isSignedIn: false,
@@ -12,13 +12,22 @@ const initialState: UserState = {
         type: ""
     },
     pending: false,
+    error: null
 }
 
 const user = ( state = initialState, action: UserActions): UserState => {
     switch(action.type) {
-        case FETCH_PENDING:
+        case FETCH_PENDING: {
             return {...state, pending: true}
+        }
+        case FETCH_ERROR: {
+            return Object.assign({}, state, {
+                error: action.payload.data
+              })
+            // return {...state, error: action.payload.data}
+        }
         case SIGN_IN_SUCCESS: {
+            console.log(action.payload.isUserSignedIn, "check pending status in reducer")
             return {...state, isSignedIn: action.payload.isUserSignedIn, pending: false}
         }
         case GET_USER_ROLE: {

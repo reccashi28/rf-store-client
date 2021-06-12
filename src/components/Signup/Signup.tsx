@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,7 +61,8 @@ export default function SignUp() {
   const [notify, setNotify] = useState({isOpen: false, message: '', type: ''})
   const classes = useStyles();
   const history = useHistory()
-  const { role } = useSelector( (state: AppState) => state.user )
+  const { role} = useSelector( (state: AppState) => state.user )
+  const error = useSelector( (state: AppState) => state.user.error )
   
   const formik = useFormik( {
     initialValues: initialState,
@@ -75,6 +76,12 @@ export default function SignUp() {
         })
     }
 })
+// let errorExist;
+// useEffect( () => {
+//   error ? errorExist = error : "" 
+// }, [error])
+
+console.log(error, "whats the error?")
 
   return (
     <Container component="main" maxWidth="xs">
@@ -168,8 +175,9 @@ export default function SignUp() {
           {/* <pre>{JSON.stringify(formik.values, null, 3)}</pre> */}
         </form>
       </div>
-
-      <Notification notify={notify} setNotify={setNotify}/>
+      {console.log(error, "error")}
+         <div>{error ? `${error}` : ""}</div>
+      {/* <Notification notify={notify} setNotify={setNotify}/> */}
     </Container>
   );
 }
