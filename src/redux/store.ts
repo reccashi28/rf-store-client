@@ -31,7 +31,7 @@ const initState: AppState = {
             purchasedBy: "",
             items: [],
             totalAmount: 0
-        } || undefined,
+        },
         pending: false,
     },
 }

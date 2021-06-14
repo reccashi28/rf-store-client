@@ -1,7 +1,7 @@
-import { Box, Button, Card, CardContent, createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
-import React from 'react'
+import { Backdrop, Box, Button, Card, CardContent, CircularProgress, createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItemToCart } from '../../redux/actions';
+import { addItemToCart, fetchCart } from '../../redux/actions';
 import { AppState } from '../../types'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -25,7 +25,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     spacing: {
         marginTop: 40,
-    }
+    },
+    backdrop: {
+        zIndex: 10,
+        color: '#fff',
+        backgroundColor: 'rgba(0,0,0,0.1)'
+      },
   }),
 );
 
@@ -35,9 +40,10 @@ function Cart() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const inCart  = useSelector( (state: AppState) => state.cart.inCart )
+    // const [isOpen, setIsOpen] = useState(false);
 
     const handleAddToCart = (productId: string, userId: string) => {
-
+        // setIsOpen(true)
         dispatch(addItemToCart({
             purchasedBy: userId,
             items: [{
@@ -46,9 +52,13 @@ function Cart() {
             }]
         })
         )
+        dispatch(fetchCart(userId))
+
+        window.location.reload()
     }
 
     const handleRemoveFromCart = (productId: string, userId: string) => {
+        // setIsOpen(true)
         dispatch(addItemToCart({
             purchasedBy: userId,
             items: [{
@@ -57,7 +67,14 @@ function Cart() {
             }]
         })
         )
+        dispatch(fetchCart(userId))
+        window.location.reload()
     }
+
+    // const handleClose = () => {
+    //     setIsOpen(false)
+    //   }
+
     return (
         <>
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
@@ -84,6 +101,9 @@ function Cart() {
                 <Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {inCart ? Math.round(inCart.totalAmount * 100)/100 : 0}</Typography>
                 <Button variant="contained" className={classes.button}>Proceed to Payment</Button>
             </Box>
+        {/* <Backdrop className={classes.backdrop} open={isOpen} onClick={() => handleClose()}>
+            <CircularProgress color="inherit" />
+        </Backdrop> */}
         </>
     )
 }

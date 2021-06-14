@@ -69,7 +69,10 @@ function ProductCard( {prod}: ProductCardProps) {
           quantity: 1
         }]
       }))
-    console.log('you click add to cart btn')
+      // window.location.reload()
+    // setTimeout(() => {
+    //   setIsOpen(false)
+    // }, 1000);
   }
   const handleClose = () => {
     dispatch(fetchCart(userId))
@@ -106,7 +109,7 @@ function ProductCard( {prod}: ProductCardProps) {
       </CardContent>
     </CardActionArea>
     <CardActions>
-      { role !== undefined && role === "admin" ? ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
+      { role === "admin" ? ( <Grid container> <Link to={`/editProduct/${prod._id}`}>
         <Button size="small" color="primary"> 
           Edit
         </Button>

@@ -19,7 +19,7 @@ export const fetchCart = (userId: string) => {
     }
 }
 
-export const getItemsInCart = (items: Cart | undefined): CartActions => {
+export const getItemsInCart = (items: Cart): CartActions => {
     return {
         type: ITEMS_IN_CART,
         payload: {
@@ -33,7 +33,6 @@ export const addItemToCart = (data: ItemToCart) => {
         axios.post('/cart', data)
             .then( res => {
                 if(res.data) {
-                    console.log("item added to cart")
                     fetchCart(data.purchasedBy)
                 }
             })

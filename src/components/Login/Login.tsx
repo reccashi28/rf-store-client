@@ -69,14 +69,8 @@ export default function SignIn() {
         initialValues: initialState,
         onSubmit: (values) => {
           dispatch(userLogin(values, history))
-          console.log(userId, "userid from login after login")
-          // if(userId){
-          //   dispatch( fetchCart(userId))
-          // }
         }
   })
-
-  console.log(userId, "userid from login")
 
   useEffect(()=> {
     dispatch(fetchCart(userId))

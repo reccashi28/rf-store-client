@@ -175,7 +175,6 @@ console.log(error, "whats the error?")
           {/* <pre>{JSON.stringify(formik.values, null, 3)}</pre> */}
         </form>
       </div>
-      {console.log(error, "error")}
          <div>{error ? `${error}` : ""}</div>
       {/* <Notification notify={notify} setNotify={setNotify}/> */}
     </Container>
