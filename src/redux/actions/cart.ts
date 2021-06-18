@@ -33,7 +33,7 @@ export const addItemToCart = (data: ItemToCart) => {
         axios.post('/cart', data)
             .then( res => {
                 if(res.data) {
-                    fetchCart(data.purchasedBy)
+                    dispatch(fetchCart(data.purchasedBy))
                 }
             })
             .catch(err => {

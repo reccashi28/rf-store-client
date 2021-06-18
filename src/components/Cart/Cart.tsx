@@ -2,7 +2,7 @@ import { Backdrop, Box, Button, Card, CardContent, CircularProgress, createStyle
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart, fetchCart } from '../../redux/actions';
-import { AppState } from '../../types'
+import { AppState, Cart } from '../../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,9 +52,6 @@ function Cart() {
             }]
         })
         )
-        dispatch(fetchCart(userId))
-
-        window.location.reload()
     }
 
     const handleRemoveFromCart = (productId: string, userId: string) => {
@@ -67,9 +64,17 @@ function Cart() {
             }]
         })
         )
-        dispatch(fetchCart(userId))
-        window.location.reload()
     }
+
+    // let cart1: any = [];
+
+    // if(inCart) {
+    //     cart = inCart.items.filter( item => {
+    //         return item.quantity > 0
+    //     })
+    // }
+
+    // console.log(cart, "item in cart")
 
     // const handleClose = () => {
     //     setIsOpen(false)
@@ -80,8 +85,11 @@ function Cart() {
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Typography className={classes.textColor} variant="h4" component="h4">You're Items</Typography>
                 { inCart ? inCart.items?.map( item => {
+                    // const index = item.findIndex(item.productId._id)
+                    // item.quantity <= 0 ? item.splice() : ""
                     return (
-                        <Card className={classes.card}>
+
+                        <Card className={classes.card} key={item.productId._id}>
                             <img className={classes.media} src={item.productId.productImage} alt={item.productId.name} />
                             <CardContent>
                                 <Typography>{item.productId.name}</Typography>
@@ -90,16 +98,22 @@ function Cart() {
                                     -
                                     </Button>
                                     <Typography>{item.quantity}</Typography>
+                                    
                                     <Button onClick={() => handleAddToCart(item.productId._id!, inCart.purchasedBy)}>
                                     +
                                     </Button>
                                 </Box>
                             </CardContent>
-                        </Card>
+                        </Card> 
+                        
                     )
-                }) : "Cart is empty" }
-                <Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {inCart ? Math.round(inCart.totalAmount * 100)/100 : 0}</Typography>
-                <Button variant="contained" className={classes.button}>Proceed to Payment</Button>
+                }) : "Cart is empty" 
+                
+                }
+                {inCart ? 
+                <div><Typography className={classes.spacing} variant="h5" component="h5" ><b>Total Amount:</b> $ {inCart ? Math.round(inCart.totalAmount * 100)/100 : 0}</Typography>
+                    <Button variant="contained" className={classes.button}>Proceed to Payment</Button></div> : inCart
+                }   
             </Box>
         {/* <Backdrop className={classes.backdrop} open={isOpen} onClick={() => handleClose()}>
             <CircularProgress color="inherit" />

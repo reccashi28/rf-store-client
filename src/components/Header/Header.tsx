@@ -47,8 +47,6 @@ function Header() {
 
     let totalQuantity = 0;
 
-        console.log(pending, "true or false")
-        console.log(isSignedIn, "user signedin")
    if(inCart && inCart.items){
     totalQuantity = inCart.items.reduce( (sum, i) => { 
         return sum + i.quantity
@@ -81,12 +79,12 @@ function Header() {
                     </Grid>
 
                     { 
-                    pending ?
+                    // pending ?
                     
-                    <Grid item xs={5} sm={4} container justify="flex-end">
-                        <CircularProgress />
-                    </Grid>
-                    :
+                    // <Grid item xs={5} sm={4} container justify="flex-end">
+                    //     <CircularProgress />
+                    // </Grid>
+                    // :
                     isSignedIn ? 
                     <Grid item xs={5} sm={4} container justify="flex-end">
                         <Box m={2} pr={2} display="flex" alignItems="center">

@@ -21,13 +21,9 @@ const user = ( state = initialState, action: UserActions): UserState => {
             return {...state, pending: true}
         }
         case FETCH_ERROR: {
-            return Object.assign({}, state, {
-                error: action.payload.data
-              })
-            // return {...state, error: action.payload.data}
+           return {...state, error: action.payload.data}
         }
         case SIGN_IN_SUCCESS: {
-            console.log(action.payload.isUserSignedIn, "check pending status in reducer")
             return {...state, isSignedIn: action.payload.isUserSignedIn, pending: false}
         }
         case GET_USER_ROLE: {

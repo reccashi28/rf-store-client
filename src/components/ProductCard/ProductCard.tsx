@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { Backdrop, CircularProgress, Grid } from '@material-ui/core';
 
 import { AppState, Product } from '../../types';
-import { addItemToCart, deleteProduct, fetchCart, fetchPendingItems } from '../../redux/actions';
+import { addItemToCart, deleteProduct, fetchCart, fetchPending, fetchPendingItems } from '../../redux/actions';
 // import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 type ProductCardProps = {
@@ -43,10 +43,10 @@ function ProductCard( {prod}: ProductCardProps) {
   const dispatch = useDispatch()
   const history = useHistory()
   const { role, userId } = useSelector( (state: AppState) => state.user)
-  const pending = useSelector( (state: AppState) => state.cart.pending)
-  const items = useSelector( (state: AppState) => state.cart.inCart)
+  // const pending = useSelector( (state: AppState) => state.cart.pending)
+  // const items = useSelector( (state: AppState) => state.cart.inCart)
   const [addToCartBtn, setAddToCartBtn] = useState(false)
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   // const [addToCartData, setAddToCartData] = useState<ItemToCart>()
 
   //disabling add to cart button if product is not in stock
@@ -61,7 +61,7 @@ function ProductCard( {prod}: ProductCardProps) {
     }
   }
   const handleAddToCart = (prodId: string) => {
-    setIsOpen(true)
+    // setIsOpen(true)
       dispatch(addItemToCart({
         purchasedBy: userId,
         items: [{
@@ -69,17 +69,19 @@ function ProductCard( {prod}: ProductCardProps) {
           quantity: 1
         }]
       }))
+      dispatch(fetchPendingItems())
       // window.location.reload()
     // setTimeout(() => {
     //   setIsOpen(false)
     // }, 1000);
   }
+
   const handleClose = () => {
     dispatch(fetchCart(userId))
-    setIsOpen(false)
+    // setIsOpen(false)
   }
-  console.log(isOpen, " is backdrop open?")
-  return (
+
+return (
 <>
   <Card className={classes.root + classes.padding} key={prod._id}>
     <CardActionArea>
@@ -128,9 +130,9 @@ function ProductCard( {prod}: ProductCardProps) {
     </CardActions>
   </Card>
   {/* <ConfirmDialog confirmDialog={confirmDialog} /> */}
-  <Backdrop className={classes.backdrop} open={isOpen} onClick={() => handleClose()}>
+  {/* <Backdrop className={classes.backdrop} open={isOpen} onClick={() => handleClose()}>
             <CircularProgress color="inherit" />
-  </Backdrop>
+  </Backdrop> */}
 
 </>
   );

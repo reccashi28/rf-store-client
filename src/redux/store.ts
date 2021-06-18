@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose} from 'redux'
-import thunk from 'redux-thunk'
+import thunk, { ThunkAction } from 'redux-thunk'
 
 import { AppState } from '../types';
 import createRootReducer from './reducers';
@@ -35,6 +35,12 @@ const initState: AppState = {
         pending: false,
     },
 }
+
+declare module 'redux' {
+    interface Dispatch<A extends Action = AnyAction> {
+      <S, E, R>(asyncAction: ThunkAction<R, S, E, A>): R;
+    }
+  }
 
 if ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
     composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
