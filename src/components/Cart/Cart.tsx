@@ -34,9 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
-function Cart() {
+function UserCart() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const inCart  = useSelector( (state: AppState) => state.cart.inCart )
@@ -53,7 +51,6 @@ function Cart() {
         })
         )
     }
-
     const handleRemoveFromCart = (productId: string, userId: string) => {
         // setIsOpen(true)
         dispatch(addItemToCart({
@@ -66,16 +63,7 @@ function Cart() {
         )
     }
 
-    // let cart1: any = [];
-
-    // if(inCart) {
-    //     cart = inCart.items.filter( item => {
-    //         return item.quantity > 0
-    //     })
-    // }
-
-    // console.log(cart, "item in cart")
-
+    // console.log(cart, "cart with minimum quant of 1")
     // const handleClose = () => {
     //     setIsOpen(false)
     //   }
@@ -84,11 +72,9 @@ function Cart() {
         <>
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Typography className={classes.textColor} variant="h4" component="h4">You're Items</Typography>
-                { inCart ? inCart.items?.map( item => {
-                    // const index = item.findIndex(item.productId._id)
-                    // item.quantity <= 0 ? item.splice() : ""
+                { inCart ? inCart?.items?.map( item => {
+                   if(item.quantity > 0 ) {
                     return (
-
                         <Card className={classes.card} key={item.productId._id}>
                             <img className={classes.media} src={item.productId.productImage} alt={item.productId.name} />
                             <CardContent>
@@ -104,9 +90,10 @@ function Cart() {
                                     </Button>
                                 </Box>
                             </CardContent>
-                        </Card> 
-                        
+                        </Card>   
                     )
+                   }
+                    
                 }) : "Cart is empty" 
                 
                 }
@@ -122,4 +109,4 @@ function Cart() {
     )
 }
 
-export default Cart
+export default UserCart

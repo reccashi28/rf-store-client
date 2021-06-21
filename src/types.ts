@@ -127,12 +127,12 @@ export type GetDialogData = {
     }
 }
 
-type itemsInCart = {
+export type itemsInCart = {
     productId: Product;
     quantity: number;
 }
 
-type addItemsToCart = {
+export type addItemsToCart = {
     productId: string;
     quantity: number;
 }
