@@ -10,13 +10,15 @@ import AddNewProduct from './components/AddNewProduct/AddNewProduct';
 import Signup from './components/Signup/Signup';
 import Login from './components/Login/Login';
 
-import './App.css';
 import Dashboard from './pages/Dashboard/Dashboard'
 import DashBoardUserForm from './components/DashBoardUserForm/DashBoardUserForm';
 // import PrivateRoute, {  PrivateRouteProps } from './components/PrivateRoute/PrivateRoute';
 // import { AppState } from './types';
 // import { useSelector } from 'react-redux';
 import ProductDetails from './components/ProductDetails/ProductDetails';
+
+import './App.css';
+
 
 axios.defaults.withCredentials = true;
 

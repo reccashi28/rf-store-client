@@ -12,3 +12,13 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+.body {
+  background-image: url(../src/assets/images/rf-store-img.jpg);
+  height: 90vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  width: 100%;
+  background-color: #f9c9b8;
+}

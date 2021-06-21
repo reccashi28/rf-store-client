@@ -74,9 +74,11 @@ function Header() {
                        </ul>
                     </Box>
                     </Grid>
+                    {role === "admin" ? "" : 
                     <Grid item xs={3} sm={4}>
                         <Box display="flex" justifyContent="center" p={2}> <Searchbar /></Box>
-                    </Grid>
+                    </Grid> }
+                   
 
                     { 
                     // pending ?
