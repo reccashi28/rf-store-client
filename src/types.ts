@@ -179,7 +179,7 @@ export type UserState = {
     users: User[],
     dialog: DialogState,
     pending: boolean,
-    error: Error | null
+    userError: Error | null
 }
 
 export type CartState = {

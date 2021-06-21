@@ -75,7 +75,7 @@ function handleAddUser() {
             </TableCell>
           </TableRow>
           <TableRow>
-            {tableHeaders.map( theader => <TableCell>{theader}</TableCell>)}
+            {tableHeaders.map( theader => <TableCell key ={theader}>{theader}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>

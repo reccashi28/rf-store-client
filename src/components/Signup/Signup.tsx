@@ -62,7 +62,7 @@ export default function SignUp() {
   const classes = useStyles();
   const history = useHistory()
   const { role} = useSelector( (state: AppState) => state.user )
-  const error = useSelector( (state: AppState) => state.user.error )
+  const userError = useSelector( (state: AppState) => state.user.userError )
   
   const formik = useFormik( {
     initialValues: initialState,
@@ -74,6 +74,7 @@ export default function SignUp() {
         message: 'User Created Successfully',
         type: 'success'
         })
+        console.log(userError, "whats in here?")
     }
 })
 // let errorExist;
@@ -81,7 +82,7 @@ export default function SignUp() {
 //   error ? errorExist = error : "" 
 // }, [error])
 
-console.log(error, "whats the error?")
+// console.log(userError, "whats the error?")
 
   return (
     <Container component="main" maxWidth="xs">
@@ -156,6 +157,8 @@ console.log(error, "whats the error?")
               />
             </Grid>
           </Grid>
+         <div>{userError ? <span style={{color: "red", padding: "20px"}}>{userError}</span> : ""}</div>
+
           <Button
             type="submit"
             fullWidth
@@ -175,7 +178,6 @@ console.log(error, "whats the error?")
           {/* <pre>{JSON.stringify(formik.values, null, 3)}</pre> */}
         </form>
       </div>
-         <div>{error ? `${error}` : ""}</div>
       {/* <Notification notify={notify} setNotify={setNotify}/> */}
     </Container>
   );

@@ -15,7 +15,7 @@ export const createNewUser = (data: User, history: any, from : string) => {
         })
         .catch( err => {
           if(err.response.data.message) {
-            createUserError(err.response.data.message)
+            dispatch(signupError(err.response.data.message))
             console.log(err.response.data.message)
           }
         })
@@ -147,7 +147,7 @@ export const fetchPending = (): UserActions => {
 }
 
 
-export const createUserError = ( data: Error | null): UserActions => {
+export const signupError = ( data: Error | null): UserActions => {
   return {
     type: FETCH_ERROR,
     payload: {

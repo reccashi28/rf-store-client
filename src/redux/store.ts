@@ -24,7 +24,7 @@ const initState: AppState = {
             type: ""
         },
         pending: false,
-        error: null
+        userError: null
     },
     cart: {
         inCart: {

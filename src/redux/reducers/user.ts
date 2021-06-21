@@ -12,7 +12,7 @@ const initialState: UserState = {
         type: ""
     },
     pending: false,
-    error: null
+    userError: null
 }
 
 const user = ( state = initialState, action: UserActions): UserState => {
@@ -21,7 +21,7 @@ const user = ( state = initialState, action: UserActions): UserState => {
             return {...state, pending: true}
         }
         case FETCH_ERROR: {
-           return {...state, error: action.payload.data}
+           return {...state, userError: action.payload.data}
         }
         case SIGN_IN_SUCCESS: {
             return {...state, isSignedIn: action.payload.isUserSignedIn, pending: false}
