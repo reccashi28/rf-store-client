@@ -63,6 +63,8 @@ export default function SignIn() {
   const dispatch = useDispatch()
   // const { role } = useSelector( (state: AppState) => state.user)
   const userId = useSelector( (state: AppState) => state.user.userId)
+  const userErrorMessage = useSelector( (state: AppState) => state.user.userErrorMessage)
+
   const history = useHistory()
 
   const formik = useFormik( {
@@ -114,6 +116,7 @@ export default function SignIn() {
             />
           </Grid>
         </Grid>
+        <div>{userErrorMessage ? <span style={{color: "red", padding: "20px"}}>{userErrorMessage}</span> : ""}</div>
         <Button
           type="submit"
           fullWidth

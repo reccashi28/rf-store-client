@@ -15,7 +15,7 @@ export const createNewUser = (data: User, history: any, from : string) => {
         })
         .catch( err => {
           if(err.response.data.message) {
-            dispatch(signupError(err.response.data.message))
+            dispatch(userErrorData(err.response.data.message))
             console.log(err.response.data.message)
           }
         })
@@ -33,7 +33,12 @@ export const userLogin = (loginData: UserLogIn, history: any) => {
         // dispatch(fetchCart(userId))
         res.data.role === "admin" ? history.push('/dashboard') : history.push('/')
       })
-      .catch( err => console.log(err))
+      .catch( err => {
+        if(err.response.data.errorMessage) {
+          dispatch(userErrorData(err.response.data.errorMessage))
+          console.log(err.response.data.errorMessage)
+        }
+      })
   }
 }
 
@@ -147,7 +152,7 @@ export const fetchPending = (): UserActions => {
 }
 
 
-export const signupError = ( data: Error | null): UserActions => {
+export const userErrorData = ( data: Error | null): UserActions => {
   return {
     type: FETCH_ERROR,
     payload: {
