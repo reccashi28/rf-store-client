@@ -15,11 +15,15 @@ const useStyles = makeStyles((theme) => ({
     nav_item: {
         listStyle: "none",
         padding: 16,
+        '&:hover': {
+            bottomBorder: '2px solid red',
+            color: "#d3d3d3"
+        },
     },
     nav_link: {
         textDecoration: "none",
         color: "black",
-        fontSize: 20
+        fontSize: 30
     }
 
   }));

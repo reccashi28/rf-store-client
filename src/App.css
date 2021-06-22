@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -21,4 +25,5 @@
   object-fit: cover;
   width: 100%;
   background-color: #f9c9b8;
+  font-size: 20px;
 }

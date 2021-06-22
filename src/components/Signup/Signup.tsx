@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+    fontSize: 20,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -123,7 +124,6 @@ export default function SignUp() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="lname"
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
               />
@@ -136,7 +136,6 @@ export default function SignUp() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
                 value={formik.values.email}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
