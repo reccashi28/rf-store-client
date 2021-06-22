@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    border: "1px solid #f0ede6",
+    padding: 20,
+    borderRadius: 5,
+    backgroundColor: "#f2f2f0"
   },
   avatar: {
     margin: theme.spacing(1),
@@ -90,7 +94,7 @@ export default function SignUp() {
 // console.log(userError, "whats the error?")
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm" >
       <CssBaseline />
       <div className={classes.paper}>
         {role === "user" ? (
@@ -101,7 +105,7 @@ export default function SignUp() {
         ) :
          (
           <Typography component="h1" variant="h5">
-          Create User
+          Signup
         </Typography>
         )}
         
