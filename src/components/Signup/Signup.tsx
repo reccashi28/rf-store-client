@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  text: {
+    fontSize: 20,
+    fontWeight: 500,
+    border: 5,
+  }
 }));
 
 const initialState = {
@@ -104,7 +109,7 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
+              className={classes.text}
                 name="firstName"
                 variant="outlined"
                 required
@@ -126,10 +131,21 @@ export default function SignUp() {
                 name="lastName"
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
+                InputProps={{
+                  classes: {
+                    input: classes.text,
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              
+              InputProps={{
+                classes: {
+                  input: classes.text,
+                },
+              }}
                 variant="outlined"
                 required
                 fullWidth
@@ -152,6 +168,11 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 onChange={formik.handleChange}
+                InputProps={{
+                  classes: {
+                    input: classes.text,
+                  },
+                }}
               />
             </Grid>
           </Grid>

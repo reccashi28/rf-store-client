@@ -19,6 +19,11 @@ import liIcon from '../../assets/images/linkedin-icon.png'
 
 
 const useStyles = makeStyles((theme) => ({
+    container: {
+        backgroundColor: "#f0ede6",
+        padding: 20,
+        borderRadius: 5,
+    },
     images: {
         width: '30px',
     },
@@ -32,15 +37,17 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         width: '60px'
+    },
+    text: {
+        fontSize: 20,
     }
   }));
 
 function Header() {
+    const classes = useStyles();
     const dispatch = useDispatch()
     const { role, name, pending} = useSelector( (state: AppState) => state.user )
     const { inCart } = useSelector( (state: AppState) => state.cart )
-
-    const classes = useStyles();
     // const history = useHistory();
     const isSignedIn = useUser();
     const [cartOpen, setCartOpen] = useState(false)
@@ -54,7 +61,7 @@ function Header() {
    } 
 
     return (
-        <Grid container>
+        <Grid container className={classes.container}>
             <Grid item xs={10} sm={12} >      
                 <Grid item container justify="center"> <Typography variant="h2" component="h2">RF-STORE</Typography> </Grid>
                 <Grid item container justify="space-between"> 
@@ -90,7 +97,7 @@ function Header() {
                     isSignedIn ? 
                     <Grid item xs={5} sm={4} container justify="flex-end">
                         <Box m={2} pr={2} display="flex" alignItems="center">
-                        <Typography>Hello, {name}</Typography>
+                        <Typography className={classes.text}>Hello, {name}</Typography>
                         </Box>
                         <Box m={2}>
                         <Link to="/"><Button variant="contained" color="primary" onClick={()=> dispatch(userLogout())}>Logout</Button></Link>
@@ -121,7 +128,7 @@ function Header() {
                         >
                         <Cart />
                         </Drawer>
-                        <Button onClick={() => setCartOpen(true)}>
+                        <Button  onClick={() => setCartOpen(true)}>
                             <Badge badgeContent={totalQuantity} color="error">
                                 <AddShoppingCartIcon />
                             </Badge>
