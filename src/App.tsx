@@ -18,6 +18,8 @@ import DashBoardUserForm from './components/DashBoardUserForm/DashBoardUserForm'
 import ProductDetails from './components/ProductDetails/ProductDetails';
 
 import './App.css';
+import { shadows } from '@material-ui/system';
+import Footer from './components/Footer/Footer';
 
 
 axios.defaults.withCredentials = true;
@@ -26,17 +28,19 @@ const useStyles = makeStyles({
   root: {
     paddingTop: 40,
   },
+  main: {
+    padding: 10,
+    marginTop: 30,
+    borderRadius: 5,
+    minHeight: '70vh',
+    color: 'white',
+    boxShadow: '0px 0px 12px 0px rgba(0,0,0,0.1)'
+  }
 });
 
 function App() {
     const classes = useStyles();
-    // const { isSignedIn, role} = useSelector( (state: AppState) => state.user)
 
-    // const initialStatePrivateRoute: PrivateRouteProps = {
-    //    path: ""
-    // }
-
-    // console.log(initialStatePrivateRoute, "private value")
   return (
     <div>
     <Grid container className={classes.root}>
@@ -44,6 +48,7 @@ function App() {
       <Grid item xs={10} sm={8}>
         <Router>
           <Header />
+          <Grid container className={classes.main}>
           <Switch>
             <Route exact path="/">
               <Home />
@@ -83,6 +88,8 @@ function App() {
             {/* <PrivateRoute path="/editProduct/:_id" component={AddNewProduct} /> */}
             {/* <PrivateRoute path="/addProduct" component={AddNewProduct} /> */}
           </Switch>
+          </Grid>
+          <Footer />
         </Router>   
       </Grid>
       <Grid item xs={1} sm={2}/>

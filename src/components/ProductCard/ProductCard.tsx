@@ -61,7 +61,6 @@ function ProductCard( {prod}: ProductCardProps) {
     }
   }
   const handleAddToCart = (prodId: string) => {
-    // setIsOpen(true)
       dispatch(addItemToCart({
         purchasedBy: userId,
         items: [{
@@ -70,10 +69,6 @@ function ProductCard( {prod}: ProductCardProps) {
         }]
       }))
       dispatch(fetchPendingItems())
-      // window.location.reload()
-    // setTimeout(() => {
-    //   setIsOpen(false)
-    // }, 1000);
   }
 
   const handleClose = () => {
@@ -102,9 +97,12 @@ return (
         <Typography variant="h6" component="h1">
          ${prod.price}
         </Typography>
-        {prod.quantity > 0 ? <Typography variant="h6" component="h1" className={classes.stock}>
+        {prod.quantity > 0 ? 
+        <Typography variant="h6" component="h1" className={classes.stock}>
          In stock
-        </Typography> : <Typography variant="h6" component="h1" className={classes.stock}>
+        </Typography> 
+        : 
+        <Typography variant="h6" component="h1" className={classes.stock}>
          Out of stock
         </Typography>}
         

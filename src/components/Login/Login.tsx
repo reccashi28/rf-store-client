@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #f0ede6",
     padding: 20,
     borderRadius: 5,
-    backgroundColor: "#f2f2f0"
+    backgroundColor: "#f2f2f0",
+    // backgroundColor: '#00334e',
+    color: "white",
   },
   avatar: {
     margin: theme.spacing(1),

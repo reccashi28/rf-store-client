@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     nav_link: {
         textDecoration: "none",
-        color: "black",
+        color: "white",
         fontSize: 30
     }
 

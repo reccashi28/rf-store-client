@@ -9,7 +9,6 @@ const useStyles = makeStyles({
       marginTop: 50,
       display: "flex",
       justifyContent: "center",
-      alignItems: "center",
     }
   });
   
@@ -18,7 +17,7 @@ function Home() {
 
     return (
         <div className={classes.homeContainer}>
-           <Typography variant="h1" component="h1" style={{color: "white"}}>Welcome dear customers.</Typography>
+           <Typography variant="h1" component="h1" style={{color: "#00334e"}}>Welcome dear customers.</Typography>
         </div>
     )
 }

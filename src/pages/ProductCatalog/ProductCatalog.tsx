@@ -16,7 +16,7 @@ function ProductCatalog() {
     const { displayProduct, searchProduct } = useSelector( (state: AppState) => state.product)
     
     const product = displayProduct.filter( product => {
-        return product.name.toLocaleLowerCase().includes(searchProduct.toLocaleLowerCase())
+        return product.name.toLowerCase().includes(searchProduct.toLowerCase())
     })
     const useStyles = makeStyles({
         root: {

@@ -20,7 +20,7 @@ import liIcon from '../../assets/images/linkedin-icon.png'
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        backgroundColor: "#f0ede6",
+        backgroundColor: "#00334e",
         padding: 20,
         borderRadius: 5,
     },
@@ -101,6 +101,7 @@ function Header() {
                         </Box>
                         <Box m={2}>
                         <Link to="/"><Button variant="contained" color="primary" onClick={()=> dispatch(userLogout())}>Logout</Button></Link>
+                        {/* <Button variant="contained" color="primary" onClick={()=> }>log out</Button> */}
                         </Box>
                     </Grid> 
                     : 
@@ -130,7 +131,7 @@ function Header() {
                         </Drawer>
                         <Button  onClick={() => setCartOpen(true)}>
                             <Badge badgeContent={totalQuantity} color="error">
-                                <AddShoppingCartIcon />
+                                <AddShoppingCartIcon style={{ color: '#fff' }} />
                             </Badge>
                         </Button>
                         </Box>

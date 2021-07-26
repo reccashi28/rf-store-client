@@ -20,8 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
         color: '#f44336',
     },
     button: {
-        backgroundColor: "orange",
+        backgroundColor: "#00334e",
         margin: 40,
+        color: 'white',
+        fontSize: 20,
     },
     spacing: {
         marginTop: 40,
