@@ -23,7 +23,6 @@ const initState: AppState = {
             title: "",
             type: ""
         },
-        pending: false,
         userErrorMessage: null
     },
     cart: {
@@ -32,7 +31,6 @@ const initState: AppState = {
             items: [],
             totalAmount: 0
         },
-        pending: false,
     },
 }
 

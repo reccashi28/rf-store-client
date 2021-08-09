@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { Backdrop, CircularProgress, Grid } from '@material-ui/core';
 
 import { AppState, Product } from '../../types';
-import { addItemToCart, deleteProduct, fetchCart, fetchPending, fetchPendingItems } from '../../redux/actions';
+import { addItemToCart, deleteProduct, fetchCart } from '../../redux/actions';
 // import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 type ProductCardProps = {
@@ -68,7 +68,6 @@ function ProductCard( {prod}: ProductCardProps) {
           quantity: 1
         }]
       }))
-      dispatch(fetchPendingItems())
   }
 
   const handleClose = () => {

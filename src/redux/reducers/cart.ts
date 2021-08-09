@@ -1,5 +1,5 @@
 
-import { CartActions, CartState, FETCH_PENDING, ITEMS_IN_CART } from "../../types"
+import { CartActions, CartState, ITEMS_IN_CART } from "../../types"
 
 const cartInitState: CartState = {
     inCart: {
@@ -7,17 +7,14 @@ const cartInitState: CartState = {
         items: [],
         totalAmount: 0
     } || undefined,
-    pending: false
 }
 
 const cart = (state=cartInitState, action: CartActions): CartState => {
     switch(action.type){
-        case FETCH_PENDING: {
-            return {...state, pending: true}
-        }
+
         case ITEMS_IN_CART: {
             const {items} = action.payload
-            return {...state, pending: false, inCart: items}
+            return {...state, inCart: items}
         }
         default: {
             return state;

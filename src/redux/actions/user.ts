@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID, FETCH_PENDING, FETCH_ERROR } from "../../types"
+import { GET_USER_ROLE, SIGN_IN_SUCCESS, User, UserActions, UserLogIn, GET_USER_NAME, GET_USERS, DialogState, DIALOG_DATA, GET_USER_ID, FETCH_ERROR } from "../../types"
 import { getItemsInCart } from "./cart"
 
 export const createNewUser = (data: User, history: any, from : string) => {
@@ -144,13 +144,6 @@ export const updateUser = (data: User, history: any) => {
       .catch( err => console.log(err))
   }
 }
-
-export const fetchPending = (): UserActions => {
-  return {
-    type: FETCH_PENDING,
-  }
-}
-
 
 export const userErrorData = ( data: Error | null): UserActions => {
   return {

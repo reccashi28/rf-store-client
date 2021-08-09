@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { Cart, CartActions, FETCH_PENDING, ITEMS_IN_CART, ItemToCart } from "../../types"
+import { Cart, CartActions, ITEMS_IN_CART, ItemToCart } from "../../types"
 
 export const fetchCart = (userId: string) => {
     return async (dispatch: Dispatch) => {
@@ -42,8 +42,3 @@ export const addItemToCart = (data: ItemToCart) => {
     }
 }
 
-export const fetchPendingItems = (): CartActions => {
-    return {
-      type: FETCH_PENDING,
-    }
-  }

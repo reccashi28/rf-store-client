@@ -11,8 +11,9 @@ export const EDIT_USER = 'EDIT_USER'
 export const DIALOG_DATA= 'DIALOG_DATA'
 export const ITEMS_IN_CART= 'ITEMS_IN_CART'
 export const SEARCH_KEYWORD = 'SEARCH_KEYWORD'
-export const FETCH_PENDING = 'FETCH_PENDING'
 export const FETCH_ERROR = 'FETCH_ERROR'
+export const FETCH_PENDING = 'FETCH_PENDING'
+
 
 export type Product = {
     _id?: string
@@ -156,15 +157,11 @@ export type AddToCart = {
     }
 }
 
-export type FetchDataLoader = {
-    type: typeof FETCH_PENDING,
-}
-
 export type ProductActions = GetProductSuccess | CreateProduct | SearchProduct 
 
-export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId | FetchDataLoader | CreateNewUserError
+export type UserActions = CreateNewUser | SigninSuccess | GetUserRole | GetUserName | GetUsers | EditUser | GetDialogData | GetUserId | CreateNewUserError
 
-export type CartActions = AddToCart | FetchDataLoader
+export type CartActions = AddToCart 
 
 export type ProductState = {
     displayProduct: Product[],
@@ -178,13 +175,11 @@ export type UserState = {
     userId: string,
     users: User[],
     dialog: DialogState,
-    pending: boolean,
     userErrorMessage: Error | null
 }
 
 export type CartState = {
-    inCart: Cart | undefined,
-    pending: boolean
+    inCart: Cart | undefined
 }
 
 export type AppState = {

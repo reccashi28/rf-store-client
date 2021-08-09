@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const { role, name, pending} = useSelector( (state: AppState) => state.user )
+    const { role, name} = useSelector( (state: AppState) => state.user )
     const { inCart } = useSelector( (state: AppState) => state.cart )
     // const history = useHistory();
     const isSignedIn = useUser();
