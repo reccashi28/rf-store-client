@@ -40,7 +40,6 @@ function UserCart() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const inCart  = useSelector( (state: AppState) => state.cart.inCart )
-    // const [isOpen, setIsOpen] = useState(false);
 
     const handleAddToCart = (productId: string, userId: string) => {
         // setIsOpen(true)
@@ -75,19 +74,20 @@ function UserCart() {
             <Box className={classes.root} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Typography className={classes.textColor} variant="h4" component="h4">You're Items</Typography>
                 { inCart ? inCart?.items?.map( item => {
-                   if(item.quantity > 0 ) {
+
+                   if(item.quantity > 0 && item.productId !== null ) {
                     return (
                         <Card className={classes.card} key={item.productId._id}>
-                            <img className={classes.media} src={item.productId.productImage} alt={item.productId.name} />
+                            <img className={classes.media} src={item?.productId?.productImage} alt={item.productId.name} />
                             <CardContent>
-                                <Typography>{item.productId.name}</Typography>
+                                <Typography>{item.productId?.name}</Typography>
                                 <Box display="flex" justifyContent="center" alignItems="center">
-                                    <Button onClick={() => handleRemoveFromCart(item.productId._id!, inCart.purchasedBy)} >
+                                    <Button onClick={() => handleRemoveFromCart(item.productId?._id!, inCart.purchasedBy)} >
                                     -
                                     </Button>
                                     <Typography>{item.quantity}</Typography>
                                     
-                                    <Button onClick={() => handleAddToCart(item.productId._id!, inCart.purchasedBy)}>
+                                    <Button onClick={() => handleAddToCart(item.productId?._id!, inCart.purchasedBy)}>
                                     +
                                     </Button>
                                 </Box>
